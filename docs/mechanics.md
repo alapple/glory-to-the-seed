@@ -10,11 +10,15 @@ You have to manage the happiness of the people. The happier they are, the more c
 ### Priority 2:
 While planting crops or taking care of your soil, you may find rare valuables dug in the soil. With these valuables, you can bribe the inspector. 
 
+The government can give you extra workers which you can assign to your acres.
+
 ### Priority 3:
 Every year, you can choose from 3 random perks.
 
 ### Priority 4:
 Seasons that influence the crops' viability. In the winter, crops grow slower.
+
+You can lie to your people about the available food. If they find out about your lie, all the workers will revolt.
 
 ## Random Events:
 ### Priority 1:
