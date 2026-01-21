@@ -37,4 +37,5 @@ Capitalists disguised as insects can infest your farm. As pesticides are too exp
 ### Priority 4:
 A virus wave hits your farm and infects your workers, this results in a loss of efficiency for a period of time. To prevent this, you can buy medicine 
 
+If the fire burns down your crops, the soil is more fertile and crops grow faster. 
 
