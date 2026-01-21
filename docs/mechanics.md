@@ -34,6 +34,8 @@ A hungry neighbor can steal your crops. You can report him to the government to 
 ### Priority 3:
 Capitalists disguised as insects can infest your farm. As pesticides are too expensive, you can send the KGB to remove them.
 
+You can force your people to eat less, but this will result in a loss of happiness and fewer crops.
+
 ### Priority 4:
 A virus wave hits your farm and infects your workers, this results in a loss of efficiency for a period of time. To prevent this, you can buy medicine 
 
