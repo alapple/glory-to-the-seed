@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< Updated upstream:Assets/Art/Sprites/Logos/Base_Button.png.meta
 guid: 190da8e4ec0983c4c86ce6d5699a4535
+=======
+guid: 34ae6e1dd97df1e4f94cc9552fc6b9cb
+>>>>>>> Stashed changes:Assets/Art/Sprites/UI/Base_Button.png.meta
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -37,12 +41,21 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< Updated upstream:Assets/Art/Sprites/Logos/Base_Button.png.meta
     filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 0
     wrapV: 0
     wrapW: 0
+=======
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+>>>>>>> Stashed changes:Assets/Art/Sprites/UI/Base_Button.png.meta
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -72,10 +85,17 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
+<<<<<<< Updated upstream:Assets/Art/Sprites/Logos/Base_Button.png.meta
     maxTextureSize: 4096
     resizeAlgorithm: 1
     textureFormat: -1
     textureCompression: 0
+=======
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+>>>>>>> Stashed changes:Assets/Art/Sprites/UI/Base_Button.png.meta
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
