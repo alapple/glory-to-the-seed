@@ -1,4 +1,4 @@
-##Regions
+## Regions
 You are given 3 fields in 3 different regions by the state. Each region having its own benefits and downsides to growing crops. 
 
 Each field has a risk/reward ratio.
@@ -10,7 +10,7 @@ Region 2: Has a 25% chance of a random event happening every minute.
 	      Crop Growth is increased by 5% per real life minute.
 Region 3: Has a 5% chance of a random event happening every minute.
 	      Crop Growth is decreased by 15% per real life minute.
-##Random Events
+## Random Events
 •	A fire will destroy your farm if you let it burn for longer than 4 minutes, meaning you lose the game.
 •	A fire shrinks your potatoes per second rate by 75% while it is active and 35% for 1 minute after it is put out.
 •	Every 15 seconds a fire block is spawned, 1 fire block requires 1 water bucket to be put out. Meaning if you let the fire get too big, you would need 12 water buckets to put the fire out.
@@ -26,8 +26,18 @@ Region 3: Has a 5% chance of a random event happening every minute.
 
 
 
-##Production Rates
+## Production Rates
 •	Workers with 100% production rate will double your harvest. Meaning if you have a harvest of 5 potatoes/second, you will now have 10 potatoes/second.
 •	0% production rate means your workers are not adding any benefit to the farm, so you harvest your normal rate. 
+
+## Harvesting
+You start with the rate of 1 potato/second. To upgrade your harvest, you have to get 50 of your harvest to fill a potato bag, which you can then exchange for a magic potato. That being then 2 potatoes/second.
+
+Example:
+• Player starts with 1 potato/second, the player then needs 50 potatoes to get another magic potato.
+• Player now has a harvest of 2 potatoes/second, he now needs 100 potatoes to get the third one. 
+
+• A player has a harvest of 57 potatoes/second, meaning he needs 2850 potatoes to reach the next magic potato. But the player has a production rate of 100%, this is due to his workers being satisfied and happy. This now doubles his harvest, meaning he is on 114 potatoes/second. Meaning the player has to wait 25 seconds to reach the next milestone.
+
 
 
