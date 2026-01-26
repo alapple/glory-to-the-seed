@@ -1,0 +1,33 @@
+##Regions
+You are given 3 fields in 3 different regions by the state. Each region having its own benefits and downsides to growing crops. 
+
+Each field has a risk/reward ratio.
+The higher the risk, meaning random events that damage your crops could happen more regularly, the quicker the crops grow which could be useful when you’re close to the deadline and need to reach the quota.
+
+Region 1: Has a 65% chance of a random event happening every minute.
+	      Crop Growth is increased by 45% per real life minute.
+Region 2: Has a 25% chance of a random event happening every minute.
+	      Crop Growth is increased by 5% per real life minute.
+Region 3: Has a 5% chance of a random event happening every minute.
+	      Crop Growth is decreased by 15% per real life minute.
+##Random Events
+•	A fire will destroy your farm if you let it burn for longer than 4 minutes, meaning you lose the game.
+•	A fire shrinks your potatoes per second rate by 75% while it is active and 35% for 1 minute after it is put out.
+•	Every 15 seconds a fire block is spawned, 1 fire block requires 1 water bucket to be put out. Meaning if you let the fire get too big, you would need 12 water buckets to put the fire out.
+
+•	If a worker is moody, you can automatically regenerate their production rate them by giving them 20 of your potatoes.
+
+•	If you don’t take care of your workers, you will lose 10% of the production rate per minute, meaning that after 10 minutes, you will stop producing any crops.
+
+•	If your workers start revolting, you can contact the red army. They will take 7 days to arrive. Once completed, production rates would be down 30% for 1 week. If you don’t contact the red army, there is a possibility that 35% of your workers will leave on the 4th day.
+•	If your machines break down, you need to find the tools in your soil. Once found, you can repair your machine and get back to work.
+
+•	If a neighbor decides to steal your crops, you could lose between 20%-40% of your total harvest. If you report to him, you will get your potatoes back, but production rate of workers are lowered by 35%. If you don’t, workers remain the same, but you lose your potatoes.
+
+
+
+##Production Rates
+•	Workers with 100% production rate will double your harvest. Meaning if you have a harvest of 5 potatoes/second, you will now have 10 potatoes/second.
+•	0% production rate means your workers are not adding any benefit to the farm, so you harvest your normal rate. 
+
+
