@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public class ResourceRandomizer
 {
     //TODO: Make actual randomizer. Has to return the SortedDictionary<string, int>
+    //this is just for testing purposes. look into the ResourceManager class for real namings
     public Dictionary<string, int> ReturnResources()
     {
         Dictionary<string, int> resources = new Dictionary<string, int>();
