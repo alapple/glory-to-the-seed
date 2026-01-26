@@ -9,7 +9,7 @@ namespace Core
     public class ResourceManager : MonoBehaviour
     {
         public List<Resource> resources = new();
-
+        
         private readonly Dictionary<Resource, int> _resourcesAmount = new();
 
         public event Action<Resource, int> OnResourceChanged;
@@ -52,6 +52,11 @@ namespace Core
         {
             _resourcesAmount[resource] -= amount;
             OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
+        }
+
+        public Dictionary<Resource, int> GetResourcesAmount()
+        {
+            return _resourcesAmount;
         }
     }
 }

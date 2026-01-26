@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 /*
@@ -13,9 +12,6 @@ public class QuestsController : MonoBehaviour
 
     private ResourceRandomizer _resourceRandomizer;
     private QuestAmountRandomizer _questAmountRandomizer;
-
-    [FormerlySerializedAs("recourceManager")] [SerializeField]
-    public ResourceManager resourceManager;
 
 
     void Awake()
@@ -37,6 +33,5 @@ public class QuestsController : MonoBehaviour
     {
         var resources = _resourceRandomizer.ReturnResources();
         int potatoAmount = _questAmountRandomizer.GetQuestAmount();
-        resourceManager.SetResources(resources, potatoAmount);
     }
 }
