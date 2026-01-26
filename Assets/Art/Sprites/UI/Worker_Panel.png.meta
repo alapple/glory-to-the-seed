@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9b8724ede2f97bd4392f3ea3f73f8064
+guid: b5fbd733fbe5c924083bcef89b24f3a6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1075832534228107588
-    second: Wodka_0
+      213: 5560338408110192806
+    second: Worker_Panel_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -42,7 +42,7 @@ TextureImporter:
     mipBias: 0
     wrapU: 1
     wrapV: 1
-    wrapW: 0
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -98,7 +98,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Worker_Panel_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 6
+        width: 58
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a87e5e725a4a2d40800000000000000
+      internalID: 5560338408110192806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -112,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Worker_Panel_0: 5560338408110192806
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
