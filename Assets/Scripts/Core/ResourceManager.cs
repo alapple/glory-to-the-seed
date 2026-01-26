@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 using Resource = Data.Resources.Resources;
 
 namespace Core
@@ -9,6 +11,8 @@ namespace Core
         public List<Resource> resources = new();
 
         private readonly Dictionary<Resource, int> _resourcesAmount = new();
+
+        public event Action<Resource, int> OnResourceChanged;
 
         void Awake()
         {
@@ -34,20 +38,20 @@ namespace Core
             foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
             {
                 _resourcesAmount[resource] += Random.Range(resource.minValue, resource.maxValue);
-                Debug.Log($"Added {resource} with amount {_resourcesAmount[resource]}");
+                OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
             }
-
-            ;
         }
 
         public void AddResource(Resource resource, int amount)
         {
             _resourcesAmount[resource] += amount;
+            OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
         }
 
         public void RemoveResourceU(Resource resource, int amount)
         {
             _resourcesAmount[resource] -= amount;
+            OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
         }
     }
 }
