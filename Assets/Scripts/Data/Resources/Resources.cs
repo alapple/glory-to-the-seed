@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace Data.Resources
 {
+    [CreateAssetMenu(menuName = "Resources")]
+
     public class Resources : ScriptableObject
     {
         public string resourceName;
