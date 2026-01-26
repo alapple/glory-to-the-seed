@@ -5,18 +5,32 @@ using Data.Events;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
+using Resources = Data.Resources.Resources;
 
 namespace Core
 {
     public class RegionController : MonoBehaviour
     {
-        public Stats Stats;
-
+        public int baseHappiness;
+        public int baseProduction;
+        public int baseFood;
+        
+        private int _happiness;
+        private int _production;
+        private int _food;
+        
         public List<GameEvent> events;
+        
+        private readonly Dictionary<GameEvent, int> _activePenalties;
+        private readonly Dictionary<GameEvent, Coroutine> _activeTimers;
+        private readonly Dictionary<GameEvent, int> _eventResolvers;
 
-        private Dictionary<GameEvent, int> _activePenalties = new Dictionary<GameEvent, int>();
-
-        private Dictionary<GameEvent, Coroutine> _activeTimers = new Dictionary<GameEvent, Coroutine>();
+        void Awake()
+        {
+            _happiness = baseHappiness;
+            _production = baseProduction;
+            _food = baseFood;
+        }
 
         public void FixedUpdate()
         {
@@ -36,10 +50,8 @@ namespace Core
 
                 float currentVal = GetStatValue(evt.thresholdStat);
 
-                if (evt.triggerOnLower)
-                    conditionMet = currentVal < evt.thresholdValue;
-                else
-                    conditionMet = currentVal > evt.thresholdValue;
+                if (evt.triggerOnLower) conditionMet = currentVal < evt.thresholdValue;
+                else conditionMet = currentVal > evt.thresholdValue;
 
                 if (conditionMet)
                 {
@@ -68,8 +80,8 @@ namespace Core
         void AddEvent(GameEvent evt)
         {
             if (_activePenalties.ContainsKey(evt)) return;
+            
             _activePenalties.Add(evt, evt.basePenalty);
-
             if (evt.GetsWorsOverTime)
             {
                 Coroutine timer = StartCoroutine(WorsenRoutine(evt));
@@ -90,6 +102,21 @@ namespace Core
             }
         }
 
+        public void AllocateResources(GameEvent evt, int amount, Resources resource)
+        {
+            if (_eventResolvers.ContainsKey(evt))
+            {
+                foreach (Resources res in evt.resourceToResolve)
+                {
+                    if (res == resource)
+                    {
+                        _eventResolvers[evt] += amount;
+                        if (_eventResolvers[evt] >= evt.resourceToResolve.Count) ResolveEvent(evt);
+                    }
+                }
+            }
+        }
+
         void ResolveEvent(GameEvent evt)
         {
             if (_activePenalties.ContainsKey(evt))
@@ -105,7 +132,7 @@ namespace Core
         {
             foreach (float penalty in _activePenalties.Values)
             {
-                Math.Clamp(Stats.Production - penalty, 0, int.MaxValue);
+                Math.Clamp(_production - penalty, 0, int.MaxValue);
             }
         }
 
@@ -113,9 +140,9 @@ namespace Core
         {
             switch (type)
             {
-                case StatType.Happiness: return Stats.Happiness;
-                case StatType.Food: return Stats.Food;
-                case StatType.Production: return Stats.Production;
+                case StatType.Happiness: return _happiness;
+                case StatType.Food: return _food;
+                case StatType.Production: return _production;
                 default: return 0;
             }
         }

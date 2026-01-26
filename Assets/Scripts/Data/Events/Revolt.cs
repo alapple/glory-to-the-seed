@@ -9,12 +9,5 @@ namespace Data.Events
     {
         public override bool IsThresholdEvent => true;        
         public override bool GetsWorsOverTime => false;
-
-        
-
-        public override void Execute(RegionController region)
-        {
-            
-        }
     }
 }
