@@ -19,3 +19,7 @@ Map:
 Start/End-Screen:
 - Deal from Government screen
 - Final Report screen
+Events:
+- Tractor Destroyed
+- Tractor Built
+- Fire + Particles
