@@ -19,8 +19,6 @@ public class ResourceUIManager : MonoBehaviour
 
     private List<Label> _resourceLabels = new List<Label>();
 
-    private QuestAmountRandomizer _questAmountRandomizer;
-
     void Awake()
     {
         uiDocument = GetComponent<UIDocument>();
