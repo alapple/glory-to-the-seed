@@ -21,9 +21,9 @@ namespace Core
         
         public List<GameEvent> events;
         
-        private readonly Dictionary<GameEvent, int> _activePenalties;
-        private readonly Dictionary<GameEvent, Coroutine> _activeTimers;
-        private readonly Dictionary<GameEvent, int> _eventResolvers;
+        private readonly Dictionary<GameEvent, int> _activePenalties = new();
+        private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
+        private readonly Dictionary<GameEvent, int> _eventResolvers = new();
 
         void Awake()
         {
