@@ -19,13 +19,11 @@ namespace Data.Events
         public float interval;
         public int intervalPenalty;
 
-        public List<Resources.Resources> resourceToResolve;
+        public List<Resources.Resources> resourcesToResolve;
         public int resourcesNeeded;
 
         public Dialog dialog;
 
-        [Range(0, 100)] public float randomChance;
-
-        [HideInInspector] public bool isActive;
+        [Range(0, 100)] public float randomChance; 
     }
 }

@@ -26,7 +26,6 @@ namespace Core
             CurrentYear = startYear;
         }
         
-
         void FixedUpdate()
         {
             if (isPaused) return;
