@@ -31,7 +31,7 @@ namespace Core
         void FixedUpdate()
         {
             if (isPaused) return;
-
+            
             _timer += Time.deltaTime;
 
             if (_timer >= secondsPerMonth)
