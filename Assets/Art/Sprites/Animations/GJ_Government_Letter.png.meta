@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c0e7262a6e6d43f089169bb54c1b8c8c
+guid: cbfa82159d630f940acfa87b1c9cc4a9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2971414425029463159
-    second: Field1_Animation_0
+      213: -6594894889874384173
+    second: GJ_Government_Letter_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,10 +72,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
-    resizeAlgorithm: 1
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,89 +100,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Field1_Animation_0
+      name: GJ_Government_Letter_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 135
-        height: 72
+        width: 1065
+        height: 200
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 983b5abd25a63c6d0800000000000000
-      internalID: -2971414425029463159
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Field1_Animation_1
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 0
-        width: 135
-        height: 72
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e4b03bc76156ba04d87b28aeef23e14b
-      internalID: -430744713
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Field1_Animation_2
-      rect:
-        serializedVersion: 2
-        x: 270
-        y: 0
-        width: 135
-        height: 72
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2e9a147951344b24b85e1a7808015d76
-      internalID: 1213217032
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Field1_Animation_3
-      rect:
-        serializedVersion: 2
-        x: 405
-        y: 0
-        width: 135
-        height: 72
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f521e6792a661ca4882bc41800529aa8
-      internalID: -1099815631
+      spriteID: 3da9ff5f90a3a74a0800000000000000
+      internalID: -6594894889874384173
       vertices: []
       indices: 
       edges: []
@@ -191,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 9f59aa6a54cbb724591dbcb4354c252f
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -199,14 +133,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":135.0,"y":72.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
-      Field1_Animation_0: -2971414425029463159
-      Field1_Animation_1: -430744713
-      Field1_Animation_2: 1213217032
-      Field1_Animation_3: -1099815631
+      GJ_Government_Letter_0: -6594894889874384173
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
