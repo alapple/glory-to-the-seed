@@ -9,7 +9,6 @@ namespace UI.Controllers
 
         void Start()
         {
-            Debug.Log("Hello World!");
             _field = GetComponent<PolygonCollider2D>();
         }
 
