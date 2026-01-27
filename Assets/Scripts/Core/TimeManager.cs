@@ -22,6 +22,9 @@ namespace Core
         public event Action<int, int> OnMonthChanged;
         public event Action<int> OnYearChanged;
         public event Action OnGameOver;
+        public event Action OnStatsChange;
+
+        private float _statsTimer;
 
         void Awake()
         {
@@ -38,13 +41,19 @@ namespace Core
         void FixedUpdate()
         {
             if (isPaused) return;
-
+            _statsTimer += Time.deltaTime;
             _timer += Time.deltaTime;
 
             if (_timer >= secondsPerMonth)
             {
                 AdvanceMonth();
             }
+
+            if (_statsTimer >= 1.0f)
+            {
+                OnStatsChange?.Invoke();
+            }
+            
         }
 
         private void AdvanceMonth()
@@ -60,6 +69,7 @@ namespace Core
                 {
                     OnGameOver?.Invoke();
                 }
+
                 OnYearChanged?.Invoke(CurrentYear);
             }
 
