@@ -27,11 +27,12 @@ namespace Core
             Instance = this;
             CurrentYear = startYear;
         }
-        
+
+
         void FixedUpdate()
         {
             if (isPaused) return;
-            
+
             _timer += Time.deltaTime;
 
             if (_timer >= secondsPerMonth)
@@ -55,6 +56,7 @@ namespace Core
                 }
                 OnYearChanged?.Invoke(CurrentYear);
             }
+
             OnMonthChanged?.Invoke(CurrentYear, CurrentMonth);
         }
     }
