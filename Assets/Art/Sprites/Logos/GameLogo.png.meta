@@ -73,7 +73,11 @@ TextureImporter:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 4096
+<<<<<<< Updated upstream:Assets/Art/Sprites/Logos/GameLogo.png.meta
     resizeAlgorithm: 0
+=======
+    resizeAlgorithm: 1
+>>>>>>> Stashed changes:Assets/Art/Sprites/Animations/Field1_Animation.png.meta
     textureFormat: -1
     textureCompression: 0
     compressionQuality: 50
@@ -103,12 +107,19 @@ TextureImporter:
       name: GameLogo_0
       rect:
         serializedVersion: 2
+<<<<<<< Updated upstream:Assets/Art/Sprites/Logos/GameLogo.png.meta
         x: 18
         y: 74
         width: 953
         height: 847
+=======
+        x: 0
+        y: 0
+        width: 135
+        height: 72
+>>>>>>> Stashed changes:Assets/Art/Sprites/Animations/Field1_Animation.png.meta
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -121,11 +132,77 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Field1_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 0
+        width: 135
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30481dedff58ceb4e83f77bd050bb361
+      internalID: -1475766482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Field1_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 0
+        width: 135
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a275990f3d500241ac2b9c8a121293b
+      internalID: -660154248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Field1_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 405
+        y: 0
+        width: 135
+        height: 72
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d75435aac8a692a4ba6eca75de43b4f6
+      internalID: 1636004575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: c88d8ef05f1a38845836c24e98db223e
     internalID: 0
     vertices: []
     indices: 
@@ -133,9 +210,18 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":4.0,"y":1.0},"gridSpriteSize":{"x":135.0,"y":72.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":1,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
+<<<<<<< Updated upstream:Assets/Art/Sprites/Logos/GameLogo.png.meta
       GameLogo_0: 3822379315886523921
+=======
+      Field1_Animation_0: -2971414425029463159
+      Field1_Animation_1: -1475766482
+      Field1_Animation_2: -660154248
+      Field1_Animation_3: 1636004575
+>>>>>>> Stashed changes:Assets/Art/Sprites/Animations/Field1_Animation.png.meta
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
