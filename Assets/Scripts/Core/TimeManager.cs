@@ -18,6 +18,7 @@ namespace Core
         
         public event Action<int, int> OnMonthChanged;
         public event Action<int> OnYearChanged;
+        public event Action OnGameOver;
 
         void Awake()
         {
@@ -47,6 +48,10 @@ namespace Core
             {
                 CurrentMonth = 1;
                 CurrentYear++;
+                if (CurrentYear >= startYear + 5)
+                {
+                    OnGameOver?.Invoke();
+                }
                 OnYearChanged?.Invoke(CurrentYear);
             }
             OnMonthChanged?.Invoke(CurrentYear, CurrentMonth);
