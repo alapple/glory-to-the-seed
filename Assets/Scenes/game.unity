@@ -423,7 +423,7 @@ Animator:
   m_GameObject: {fileID: 1011598068}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1a333d72bed065b43be8c41a919be327, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22c9f93eef24bb24e9239e4769c70965, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -719,7 +719,7 @@ Animator:
   m_GameObject: {fileID: 1442447540}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 068573341333e0442800d41a53012c96, type: 2}
+  m_Controller: {fileID: 9100000, guid: 757aa160c2ac49b43a48d4fab485eb20, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -848,6 +848,7 @@ GameObject:
   - component: {fileID: 1632936942}
   - component: {fileID: 1632936941}
   - component: {fileID: 1632936940}
+  - component: {fileID: 1632936943}
   m_Layer: 0
   m_Name: UIController
   m_TagString: Untagged
@@ -898,6 +899,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1632936943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632936939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6478781e57e42068135637b5e5306c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.ClockController
+  clockDocument: {fileID: 830549882}
+  timeManager: {fileID: 450558757}
 --- !u!1 &1662312848
 GameObject:
   m_ObjectHideFlags: 0
@@ -1185,7 +1200,7 @@ Animator:
   m_GameObject: {fileID: 1784604416}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4ba27672d260aa949980a667cbf1b313, type: 2}
+  m_Controller: {fileID: 9100000, guid: b0472dba2d5ec674684fe0c74c59819b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
