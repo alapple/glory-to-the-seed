@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Data.Events;
+using Data.Region;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Utils;
 using Random = UnityEngine.Random;
@@ -11,44 +13,48 @@ namespace Core
 {
     public class RegionController : MonoBehaviour
     {
-        public int baseHappiness;
-        public int baseProduction;
-        public int baseFood;
-        
-        [Tooltip("Has to be greater than 1 to increase the chance of random events")]
-        public float randomEventModifier;
-        [Tooltip("Has to be greater than 1 to increase the chance of random events")]
-        public float productionModifier;
+        public Region region;
 
         public float randomEventCheckInterval = 5f;
 
-        private int Happiness { get; set; }
-        private int Production { get; set; }
-        private int Food { get; set; }
+        public int Happiness { get; set; }
+        public int Production { get; set; }
 
         public List<GameEvent> events;
+
+        public int starvingModifier;
+        public int eatingModifier;
 
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
 
-        public event Action<int> OnEventWorsened;
+        public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
+        public event Action<GameEvent, string> OnEventAppear;
 
         private float _randomCheckTimer;
 
         void Awake()
         {
-            Happiness = baseHappiness;
-            Production = (int)(baseProduction * productionModifier);
-            Food = baseFood;
+            Happiness = region.baseHappiness;
+            Production = (int)(region.baseProduction * region.productionModifier);
+        }
+
+        void Start()
+        {
+            TimeManager.Instance.OnStatsChange += () =>
+            {
+                AddPotatoes(Production);
+                CalculateHappiness();
+            };
         }
 
         public void FixedUpdate()
         {
             CheckThresholdEvent();
             CalculateProduction();
-            
+
             _randomCheckTimer += Time.deltaTime;
             if (_randomCheckTimer >= randomEventCheckInterval)
             {
@@ -87,17 +93,17 @@ namespace Core
 
                 float roll = Random.Range(0f, 100f);
 
-                if (roll <= evt.randomChance * randomEventModifier)
+                if (roll <= evt.randomChance * region.randomEventModifier)
                 {
                     AddEvent(evt);
                 }
             }
         }
 
-        void AddEvent(GameEvent evt)
+        private void AddEvent(GameEvent evt)
         {
             if (_activePenalties.ContainsKey(evt)) return;
-
+            OnEventAppear?.Invoke(evt, region.regionName);
             _activePenalties.Add(evt, evt.basePenalty);
             if (evt.GetsWorsOverTime)
             {
@@ -106,7 +112,7 @@ namespace Core
             }
         }
 
-        IEnumerator WorsenRoutine(GameEvent evt)
+        private IEnumerator WorsenRoutine(GameEvent evt)
         {
             while (true)
             {
@@ -115,7 +121,7 @@ namespace Core
                 if (_activePenalties.ContainsKey(evt))
                 {
                     _activePenalties[evt] += evt.intervalPenalty;
-                    OnEventWorsened?.Invoke(_activePenalties[evt]);
+                    OnEventWorsened?.Invoke(evt, _activePenalties[evt]);
                 }
             }
         }
@@ -132,7 +138,7 @@ namespace Core
             }
         }
 
-        void PayForEvent(GameEvent evt, int amount, Resources resource)
+        private void PayForEvent(GameEvent evt, int amount, Resources resource)
         {
             ResourceManager.Instance.AddResource(resource, -amount);
 
@@ -145,7 +151,7 @@ namespace Core
             }
         }
 
-        void ResolveEvent(GameEvent evt)
+        private void ResolveEvent(GameEvent evt)
         {
             if (_activePenalties.ContainsKey(evt))
             {
@@ -157,26 +163,59 @@ namespace Core
             }
         }
 
-        void CalculateProduction()
+        private void CalculateProduction()
         {
+            int workerCount = CalculateTotalWorkers();
+            float totalPenalty = 0;
             foreach (float penalty in _activePenalties.Values)
             {
-                Math.Clamp(Production - penalty, 0, int.MaxValue);
+                totalPenalty += penalty;
             }
+
+            Production =
+                (int)Math.Clamp((workerCount * region.baseProduction) * (0.5f + Happiness / 100f) * (1 - totalPenalty),
+                    0, int.MaxValue);
         }
 
-        float GetStatValue(StatType type)
+        private void AddPotatoes(int amount)
+        {
+            ResourceManager.Instance.AddPotatoes(amount);
+        }
+
+        private float GetStatValue(StatType type)
         {
             switch (type)
             {
                 case StatType.Happiness: return Happiness;
-                case StatType.Food: return Food;
                 case StatType.Production: return Production;
                 default: return 0;
             }
         }
 
-        float CalculateFoodConsumption()
+        private void CalculateHappiness()
+        {
+            bool canEat = ResourceManager.Instance.ConsumePotatoes(-CalculateTotalWorkers());
+
+            if (canEat)
+            {
+                Happiness += eatingModifier;
+            }
+            else
+            {
+                Happiness -= starvingModifier;
+            }
+        }
+
+        public void AllocateResources(Resources resource)
+        {
+            switch (resource.statType)
+            {
+                case StatType.Happiness: Happiness += resource.statModifier; break;
+                case StatType.Production: Production += resource.statModifier; break;
+            }
+        }
+
+        private int CalculateTotalWorkers()
         {
             foreach (var res in ResourceManager.Instance.GetResourcesAmount())
             {
@@ -185,6 +224,7 @@ namespace Core
                     return res.Value;
                 }
             }
+
             return 0;
         }
     }
