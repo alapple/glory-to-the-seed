@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 937e6f0adc2f4255eb498e4c383ac26e
+guid: 5b974831207677e4c82689d469b33e9e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4710655734323497564
-    second: Descriptions_Panel_Hover_0
+      213: 5994350704959371957
+    second: Descriptions_Panel_Hover-export_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Descriptions_Panel_Hover_0
+      name: Descriptions_Panel_Hover-export_0
       rect:
         serializedVersion: 2
         x: 4
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c5a4287ae6c9f5140800000000000000
-      internalID: 4710655734323497564
+      spriteID: 5ba373ce436303350800000000000000
+      internalID: 5994350704959371957
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Descriptions_Panel_Hover_0: 4710655734323497564
+      Descriptions_Panel_Hover-export_0: 5994350704959371957
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
