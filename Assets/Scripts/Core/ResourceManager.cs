@@ -52,6 +52,31 @@ namespace Core
             OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
         }
 
+        public void AddPotatoes(int amount)
+        {
+            foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
+            {
+                if (resource.resourceName != "Potatoes") continue;
+                Math.Clamp(_resourcesAmount[resource] += amount, 0, int.MaxValue);
+            }
+        }
+
+        public bool ConsumePotatoes(int amount)
+        {
+            foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
+            {
+                if (resource.resourceName != "Potatoes") continue;
+                _resourcesAmount[resource] -= amount;
+                if (_resourcesAmount[resource] <= 0)
+                {
+                    _resourcesAmount[resource] = 0;
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
         public Dictionary<Resource, int> GetResourcesAmount()
         {
             return _resourcesAmount;

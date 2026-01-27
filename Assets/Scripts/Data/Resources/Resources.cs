@@ -14,6 +14,8 @@ namespace Data.Resources
 
         public int maxValue;
         
-        public StatType statModifier;
+        public StatType statType;
+        
+        public int statModifier;
     }
 }
