@@ -297,6 +297,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Core.ResourceManager
   resources:
   - {fileID: 11400000, guid: 11c0475d6992ee9f1b24e37a1cfa8b19, type: 2}
+  - {fileID: 11400000, guid: 13639e8576d19bbbe842586ba9e9e6a9, type: 2}
 --- !u!4 &1411071220
 Transform:
   m_ObjectHideFlags: 0
