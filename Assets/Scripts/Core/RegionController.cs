@@ -14,13 +14,13 @@ namespace Core
         public int baseHappiness;
         public int baseProduction;
         public int baseFood;
-        
+
         private int _happiness;
         private int _production;
         private int _food;
-        
+
         public List<GameEvent> events;
-        
+
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
@@ -80,7 +80,7 @@ namespace Core
         void AddEvent(GameEvent evt)
         {
             if (_activePenalties.ContainsKey(evt)) return;
-            
+
             _activePenalties.Add(evt, evt.basePenalty);
             if (evt.GetsWorsOverTime)
             {

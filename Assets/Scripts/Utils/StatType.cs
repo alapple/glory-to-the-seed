@@ -2,6 +2,8 @@ namespace Utils
 {
     public enum StatType
     {
-        Happiness, Food, Production
+        Happiness,
+        Food,
+        Production
     }
 }
