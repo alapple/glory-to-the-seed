@@ -17,9 +17,16 @@ namespace UI.Controllers
         {
             var startBtn = _mainMenuDocument.rootVisualElement.Q<Button>("StartButton");
             var creditsBtn = _mainMenuDocument.rootVisualElement.Q<Button>("CreditButton");
+            var quitBtn = _mainMenuDocument.rootVisualElement.Q<Button>("QuitButton");
 
             startBtn.RegisterCallback<ClickEvent>(OnStartButtonClick);
             creditsBtn.RegisterCallback<ClickEvent>(OnCreditButtonclick);
+            quitBtn.RegisterCallback<ClickEvent>(OnQuitButtonClick);
+        }
+
+        private void OnQuitButtonClick(ClickEvent evt)
+        {
+            Application.Quit();
         }
 
         private void OnCreditButtonclick(ClickEvent evt)
