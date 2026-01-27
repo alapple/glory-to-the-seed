@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -7,51 +7,30 @@ namespace UI.Controllers
 {
     public class MainMenuBtnController : MonoBehaviour
     {
-        private UIDocument _document;
-        private List<Button> _buttons = new List<Button>();
+        [SerializeField] private UIDocument _mainMenuDocument;
 
-        private static readonly int StartButtonIndex = 0;
-        private static readonly int CreditsButtonIndex = 1;
-        private static readonly int QuitButtonIndex = 2;
-        private Scene newScene;
+        private UIDocument _document;
+
+        private event Action OnGameStart;
 
         void Awake()
         {
-            _document = GetComponent<UIDocument>();
+            var startBtn = _mainMenuDocument.rootVisualElement.Q<Button>("StartButton");
+            var creditsBtn = _mainMenuDocument.rootVisualElement.Q<Button>("CreditButton");
 
-            _buttons = _document.rootVisualElement.Query<Button>().ToList();
-
-            foreach (var button in _buttons)
-            {
-                button.RegisterCallback<ClickEvent>(OnButtonClick);
-            }
-
-            SceneManager.LoadSceneAsync("Scenes/Game", LoadSceneMode.Additive);
-            newScene = SceneManager.GetSceneByName("Scenes/Game");
-
-            foreach (var root in newScene.GetRootGameObjects())
-            {
-                UIDocument uiDoc = root.GetComponentInChildren<UIDocument>();
-                if (uiDoc != null)
-                {
-                    uiDoc.rootVisualElement.style.display = DisplayStyle.None;
-                }
-            }
+            startBtn.RegisterCallback<ClickEvent>(OnStartButtonClick);
+            creditsBtn.RegisterCallback<ClickEvent>(OnCreditButtonclick);
         }
 
-        private void OnButtonClick(ClickEvent evt)
+        private void OnCreditButtonclick(ClickEvent evt)
         {
-            if (evt.target.Equals(_buttons[StartButtonIndex]))
-            {
-                SceneManager.UnloadSceneAsync("Main Menu");
-            }
-            else if (evt.target.Equals(_buttons[CreditsButtonIndex]))
-            {
-                SceneManager.LoadScene("Scenes/Credits");
-            }
-            else if (evt.target.Equals(_buttons[QuitButtonIndex]))
-            {
-            }
+            SceneManager.LoadScene("Credits");
+        }
+
+        private void OnStartButtonClick(ClickEvent evt)
+        {
+            _mainMenuDocument.rootVisualElement.style.display = DisplayStyle.None;
+            OnGameStart?.Invoke();
         }
     }
 }
