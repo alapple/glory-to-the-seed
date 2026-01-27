@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utils;
 
 namespace Data.Resources
 {
@@ -12,5 +13,7 @@ namespace Data.Resources
         public int minValue;
 
         public int maxValue;
+        
+        public StatType statModifier;
     }
 }

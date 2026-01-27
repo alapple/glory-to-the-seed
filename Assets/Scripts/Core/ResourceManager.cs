@@ -8,6 +8,7 @@ namespace Core
 {
     public class ResourceManager : MonoBehaviour
     {
+        public static ResourceManager Instance;
         public List<Resource> resources = new();
 
         private readonly Dictionary<Resource, int> _resourcesAmount = new();
@@ -17,6 +18,7 @@ namespace Core
         void Awake()
         {
             GenerateRandomResources();
+            Instance = this;
         }
 
         void Start()
@@ -37,6 +39,7 @@ namespace Core
         {
             foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
             {
+                if (resource.resourceName == "Potatoes") continue;
                 _resourcesAmount[resource] += Random.Range(resource.minValue, resource.maxValue);
                 OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
             }
@@ -45,12 +48,6 @@ namespace Core
         public void AddResource(Resource resource, int amount)
         {
             _resourcesAmount[resource] += amount;
-            OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
-        }
-
-        public void RemoveResourceU(Resource resource, int amount)
-        {
-            _resourcesAmount[resource] -= amount;
             OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
         }
 
