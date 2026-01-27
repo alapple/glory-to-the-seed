@@ -8,8 +8,6 @@ using Resource = Data.Resources.Resources;
 /*
  * Manage the resource bar and the potato amount display of the quest
  */
-
-//TODO: Change once ui is ready
 public class ResourceUIManager : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
@@ -18,28 +16,39 @@ public class ResourceUIManager : MonoBehaviour
     private VisualElement _root;
 
     private List<Label> _resourceLabels = new List<Label>();
+    private Dictionary<string, Label> _labelCache = new Dictionary<string, Label>();
 
     void Awake()
     {
-        uiDocument = GetComponent<UIDocument>();
         _resourceLabels = uiDocument.rootVisualElement.Query<Label>().ToList();
-
+        CacheLabels();
         var amounts = resourceManager.GetResourcesAmount();
         SetupResourcesUI(amounts);
+    }
+
+    private void CacheLabels()
+    {
+        foreach (var label in _resourceLabels)
+        {
+            _labelCache[label.name] = label;
+        }
     }
 
     //The name of the ScriptableObject name must match the Labels name
     private void SetupResourcesUI(Dictionary<Resource, int> resources)
     {
-        foreach (var resourceLabel in _resourceLabels)
+        foreach (var resource in resources)
         {
-            foreach (var resource in resources)
+            if (_labelCache.TryGetValue(resource.Key.resourceName, out var label))
             {
-                if (resourceLabel.name == resource.Key.resourceName)
-                {
-                    resourceLabel.text = resource.Value.ToString();
-                }
+                label.text = resource.Value.ToString();
             }
+        }
+
+        if (_labelCache["Potato"] != null)
+        {
+            _labelCache.TryGetValue("Potato", out var potato);
+            potato.text = "0";
         }
     }
 
