@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 
 namespace UI.Controllers
@@ -8,7 +9,12 @@ namespace UI.Controllers
     public class MainMenuBtnController : MonoBehaviour
     {
         public static MainMenuBtnController Instance;
-        [SerializeField] private UIDocument _mainMenuDocument;
+
+        [FormerlySerializedAs("_mainMenuDocument")] [SerializeField]
+        private UIDocument mainMenuDocument;
+
+        [FormerlySerializedAs("_gameUIDocument")] [SerializeField]
+        private UIDocument gameUIDocument;
 
         private UIDocument _document;
 
@@ -17,13 +23,20 @@ namespace UI.Controllers
         void Awake()
         {
             Instance = this;
-            var startBtn = _mainMenuDocument.rootVisualElement.Q<Button>("StartButton");
-            var creditsBtn = _mainMenuDocument.rootVisualElement.Q<Button>("CreditButton");
-            var quitBtn = _mainMenuDocument.rootVisualElement.Q<Button>("QuitButton");
+            var startBtn = mainMenuDocument.rootVisualElement.Q<Button>("StartButton");
+            var creditsBtn = mainMenuDocument.rootVisualElement.Q<Button>("CreditButton");
+            var quitBtn = mainMenuDocument.rootVisualElement.Q<Button>("QuitButton");
 
             startBtn.RegisterCallback<ClickEvent>(OnStartButtonClick);
             creditsBtn.RegisterCallback<ClickEvent>(OnCreditButtonclick);
             quitBtn.RegisterCallback<ClickEvent>(OnQuitButtonClick);
+
+            SetupDisplay();
+        }
+
+        private void SetupDisplay()
+        {
+            gameUIDocument.rootVisualElement.style.display = DisplayStyle.None;
         }
 
         private void OnQuitButtonClick(ClickEvent evt)
@@ -38,7 +51,8 @@ namespace UI.Controllers
 
         private void OnStartButtonClick(ClickEvent evt)
         {
-            _mainMenuDocument.rootVisualElement.style.display = DisplayStyle.None;
+            mainMenuDocument.rootVisualElement.style.display = DisplayStyle.None;
+            gameUIDocument.rootVisualElement.style.display = DisplayStyle.Flex;
             OnGameStart?.Invoke();
         }
     }
