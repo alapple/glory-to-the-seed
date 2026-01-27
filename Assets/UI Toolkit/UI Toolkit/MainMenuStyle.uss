@@ -1,0 +1,47 @@
+:root {
+}
+
+.header {
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+    -unity-text-align: upper-center;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/MainGameFont.ttf?fileID=12800000&guid=834b769deba0be34c9c92519e086429b&type=3#MainGameFont");
+}
+
+.button {
+    width: 360px;
+    height: 120px;
+    align-self: center;
+    border-bottom-left-radius: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    align-content: auto;
+    align-items: center;
+    font-size: 55px;
+    top: 350px;
+    margin-top: 11px;
+    margin-right: 11px;
+    margin-bottom: 11px;
+    margin-left: 11px;
+    -unity-font-definition: url("project://database/Assets/UI/Fonts/MainGameFont.ttf?fileID=12800000&guid=834b769deba0be34c9c92519e086429b&type=3#MainGameFont");
+    background-image: url("project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=-1826996831308376790&guid=190da8e4ec0983c4c86ce6d5699a4535&type=3#Base_Button_0");
+    background-position-x: center;
+    background-size: 70% 100%;
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    -unity-text-auto-size: none;
+    background-color: rgba(55, 55, 55, 0);
+    -unity-text-outline-color: rgba(0, 0, 0, 0);
+    color: rgb(0, 0, 0);
+    transition-duration: 0.35s;
+    cursor: initial;
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+.button:hover {
+    scale: 1.1 1.1;
+    background-color: rgba(255, 255, 255, 0);
+}
