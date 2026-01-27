@@ -1,9 +1,15 @@
-<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+<ui:UXML xmlns:ui="UnityEngine.UIElements"
+         noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
     <Style src="project://database/Assets/UI%20Toolkit/MainMenuStyle.uss?fileID=7433441132597879392&amp;guid=b99220af509e40642b03e01d6ce4617a&amp;type=3"/>
     <ui:VisualElement name="Container" style="flex-grow: 1;">
-        <ui:Label text="Main Menu" class="header" style="top: 100px; -unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/MainGameFont.ttf?fileID=12800000&amp;guid=834b769deba0be34c9c92519e086429b&amp;type=3#MainGameFont&quot;); font-size: 70px;"/>
-        <ui:Button text="Start&#10;" name="StartButton" class="button" style="background-image: url(&quot;project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=2800000&amp;guid=190da8e4ec0983c4c86ce6d5699a4535&amp;type=3#Base_Button&quot;);"/>
-        <ui:Button text="CREDITS" name="CreditButton" class="button" style="color: rgb(0, 0, 0); background-image: url(&quot;project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=2800000&amp;guid=190da8e4ec0983c4c86ce6d5699a4535&amp;type=3#Base_Button&quot;);"/>
-        <ui:Button text="QUIT" name="QuitButton" class="button" style="background-image: url(&quot;project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=2800000&amp;guid=190da8e4ec0983c4c86ce6d5699a4535&amp;type=3#Base_Button&quot;);"/>
+        <ui:Label text="Main Menu" class="header"
+                  style="top: 100px; -unity-font-definition: url(&quot;project://database/Assets/UI/Fonts/MainGameFont.ttf?fileID=12800000&amp;guid=834b769deba0be34c9c92519e086429b&amp;type=3#MainGameFont&quot;); font-size: 70px;"/>
+        <ui:Button text="Start&#10;" name="StartButton" class="button"
+                   style="background-image: url(&quot;project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=2800000&amp;guid=190da8e4ec0983c4c86ce6d5699a4535&amp;type=3#Base_Button&quot;);"/>
+        <ui:Button text="CREDITS" name="CreditButton" class="button"
+                   style="color: rgb(0, 0, 0); background-image: url(&quot;project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=2800000&amp;guid=190da8e4ec0983c4c86ce6d5699a4535&amp;type=3#Base_Button&quot;);"/>
+        <ui:Button text="QUIT" name="QuitButton" class="button"
+                   style="background-image: url(&quot;project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=2800000&amp;guid=190da8e4ec0983c4c86ce6d5699a4535&amp;type=3#Base_Button&quot;);"/>
     </ui:VisualElement>
 </ui:UXML>

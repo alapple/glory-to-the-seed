@@ -6,16 +6,18 @@ namespace Core
     public class TimeManager : MonoBehaviour
     {
         public static TimeManager Instance;
-        [Tooltip( "How many seconds one month takes" )]
+
+        [Tooltip("How many seconds one month takes")]
         public float secondsPerMonth = 15f;
+
         public int startYear = 1965;
-        
-        private int CurrentYear { get; set;}
+
+        private int CurrentYear { get; set; }
         private int CurrentMonth { get; set; } = 1;
 
         private float _timer;
         public bool isPaused;
-        
+
         public event Action<int, int> OnMonthChanged;
         public event Action<int> OnYearChanged;
         public event Action OnGameOver;
@@ -25,11 +27,12 @@ namespace Core
             Instance = this;
             CurrentYear = startYear;
         }
-        
+
+
         void FixedUpdate()
         {
             if (isPaused) return;
-            
+
             _timer += Time.deltaTime;
 
             if (_timer >= secondsPerMonth)
@@ -53,6 +56,7 @@ namespace Core
                 }
                 OnYearChanged?.Invoke(CurrentYear);
             }
+
             OnMonthChanged?.Invoke(CurrentYear, CurrentMonth);
         }
     }

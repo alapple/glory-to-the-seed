@@ -14,17 +14,10 @@ namespace Core
         public int baseHappiness;
         public int baseProduction;
         public int baseFood;
-        
-        [Tooltip("Has to be greater than 1 to increase the chance of random events")]
-        public float randomEventModifier;
-        [Tooltip("Has to be greater than 1 to increase the chance of random events")]
-        public float productionModifier;
 
-        public float randomEventCheckInterval = 5f;
-
-        private int Happiness { get; set; }
-        private int Production { get; set; }
-        private int Food { get; set; }
+        private int _happiness;
+        private int _production;
+        private int _food;
 
         public List<GameEvent> events;
 
@@ -32,29 +25,18 @@ namespace Core
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
 
-        public event Action<int> OnEventWorsened;
-        public event Action OnEventResolved;
-
-        private float _randomCheckTimer;
-
         void Awake()
         {
-            Happiness = baseHappiness;
-            Production = (int)(baseProduction * productionModifier);
-            Food = baseFood;
+            _happiness = baseHappiness;
+            _production = baseProduction;
+            _food = baseFood;
         }
 
         public void FixedUpdate()
         {
             CheckThresholdEvent();
+            CheckRandomEvent();
             CalculateProduction();
-            
-            _randomCheckTimer += Time.deltaTime;
-            if (_randomCheckTimer >= randomEventCheckInterval)
-            {
-                CheckRandomEvent();
-                _randomCheckTimer = 0;
-            }
         }
 
         private void CheckThresholdEvent()
@@ -83,16 +65,17 @@ namespace Core
             foreach (var evt in events)
             {
                 if (evt.IsThresholdEvent) continue;
-                if (_activePenalties.ContainsKey(evt)) continue;
+                if (evt.isActive) continue;
 
                 float roll = Random.Range(0f, 100f);
 
-                if (roll <= evt.randomChance * randomEventModifier)
+                if (roll <= evt.randomChance)
                 {
                     AddEvent(evt);
                 }
             }
         }
+
 
         void AddEvent(GameEvent evt)
         {
@@ -115,33 +98,22 @@ namespace Core
                 if (_activePenalties.ContainsKey(evt))
                 {
                     _activePenalties[evt] += evt.intervalPenalty;
-                    OnEventWorsened?.Invoke(_activePenalties[evt]);
                 }
             }
         }
 
-        public void TrySolveEvent(Resources resource, int amountToAdd)
+        public void AllocateResources(GameEvent evt, int amount, Resources resource)
         {
-            foreach (var evt in _activePenalties.Keys)
+            if (_eventResolvers.ContainsKey(evt))
             {
-                if (evt.resourcesToResolve.Contains(resource))
+                foreach (Resources res in evt.resourceToResolve)
                 {
-                    PayForEvent(evt, amountToAdd, resource);
-                    return;
+                    if (res == resource)
+                    {
+                        _eventResolvers[evt] += amount;
+                        if (_eventResolvers[evt] >= evt.resourceToResolve.Count) ResolveEvent(evt);
+                    }
                 }
-            }
-        }
-
-        void PayForEvent(GameEvent evt, int amount, Resources resource)
-        {
-            ResourceManager.Instance.AddResource(resource, -amount);
-
-            _eventResolvers.TryAdd(evt, 0);
-            _eventResolvers[evt] += amount;
-
-            if (_eventResolvers[evt] >= evt.resourcesNeeded)
-            {
-                ResolveEvent(evt);
             }
         }
 
@@ -151,17 +123,16 @@ namespace Core
             {
                 StopCoroutine(_activeTimers[evt]);
                 _activeTimers.Remove(evt);
-                _activePenalties.Remove(evt);
-                _eventResolvers.Remove(evt);
-                OnEventResolved?.Invoke();
             }
+
+            _activePenalties.Remove(evt);
         }
 
         void CalculateProduction()
         {
             foreach (float penalty in _activePenalties.Values)
             {
-                Math.Clamp(Production - penalty, 0, int.MaxValue);
+                Math.Clamp(_production - penalty, 0, int.MaxValue);
             }
         }
 
@@ -169,23 +140,11 @@ namespace Core
         {
             switch (type)
             {
-                case StatType.Happiness: return Happiness;
-                case StatType.Food: return Food;
-                case StatType.Production: return Production;
+                case StatType.Happiness: return _happiness;
+                case StatType.Food: return _food;
+                case StatType.Production: return _production;
                 default: return 0;
             }
-        }
-
-        float CalculateFoodConsumption()
-        {
-            foreach (var res in ResourceManager.Instance.GetResourcesAmount())
-            {
-                if (res.Key.resourceName == "Workers")
-                {
-                    return res.Value;
-                }
-            }
-            return 0;
         }
     }
 }

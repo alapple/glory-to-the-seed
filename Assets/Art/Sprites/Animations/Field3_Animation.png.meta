@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: b11ef5d1064eac9dd97a057274f37357
+guid: c2316cde8b66aa7328e7a257638c844e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5872817497846327267
-    second: Megafon_0
+      213: -8616700104339290862
+    second: Field3_Animation_0
+  - first:
+      213: 7640621692697213282
+    second: Field3_Animation_1
+  - first:
+      213: 5092752450616540922
+    second: Field3_Animation_2
+  - first:
+      213: -1595889249882167381
+    second: Field3_Animation_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Megafon_0
+      name: Field3_Animation_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 12
-        width: 60
-        height: 43
+        x: 0
+        y: 0
+        width: 155
+        height: 75
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d18db2ae99f8f7ea0800000000000000
-      internalID: -5872817497846327267
+      spriteID: 21509c888e45b6880800000000000000
+      internalID: -8616700104339290862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Field3_Animation_1
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 0
+        width: 156
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2697c50a2f0f80a60800000000000000
+      internalID: 7640621692697213282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Field3_Animation_2
+      rect:
+        serializedVersion: 2
+        x: 309
+        y: 0
+        width: 156
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: afebffb0f571da640800000000000000
+      internalID: 5092752450616540922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Field3_Animation_3
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 0
+        width: 156
+        height: 75
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba7a8efbe234ad9e0800000000000000
+      internalID: -1595889249882167381
       vertices: []
       indices: 
       edges: []
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Megafon_0: -5872817497846327267
+      Field3_Animation_0: -8616700104339290862
+      Field3_Animation_1: 7640621692697213282
+      Field3_Animation_2: 5092752450616540922
+      Field3_Animation_3: -1595889249882167381
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 46c3a90577cdb3ef7823678d48198a72
+guid: 1c962ab9949ae1c45adbe6a811ed714e
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,10 +72,14 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
+<<<<<<< Updated upstream
+    resizeAlgorithm: 1
+=======
     resizeAlgorithm: 0
+>>>>>>> Stashed changes
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0

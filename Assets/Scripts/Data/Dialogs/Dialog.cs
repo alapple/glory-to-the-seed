@@ -6,7 +6,6 @@ namespace Data.Dialogs
     public class Dialog : ScriptableObject
     {
         public string title;
-        [TextArea]
-        public string text;
+        [TextArea] public string text;
     }
 }
