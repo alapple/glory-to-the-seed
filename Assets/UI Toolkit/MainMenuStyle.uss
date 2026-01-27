@@ -25,7 +25,7 @@
     margin-bottom: 11px;
     margin-left: 11px;
     -unity-font-definition: url("project://database/Assets/UI/Fonts/MainGameFont.ttf?fileID=12800000&guid=834b769deba0be34c9c92519e086429b&type=3#MainGameFont");
-    background-image: url("project://database/Assets/UI/Base_Button.png?fileID=2800000&guid=957b2438c7e213bcf94af54ed5864760&type=3#Base_Button");
+    background-image: url("project://database/Assets/Art/Sprites/Logos/Base_Button.png?fileID=-1826996831308376790&guid=190da8e4ec0983c4c86ce6d5699a4535&type=3#Base_Button_0");
     background-position-x: center;
     background-size: 70% 100%;
     -unity-background-image-tint-color: rgb(255, 255, 255);
