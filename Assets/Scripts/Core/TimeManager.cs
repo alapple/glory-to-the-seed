@@ -27,8 +27,7 @@ namespace Core
             Instance = this;
             CurrentYear = startYear;
         }
-
-
+        
         void FixedUpdate()
         {
             if (isPaused) return;
@@ -56,7 +55,6 @@ namespace Core
                 }
                 OnYearChanged?.Invoke(CurrentYear);
             }
-
             OnMonthChanged?.Invoke(CurrentYear, CurrentMonth);
         }
     }
