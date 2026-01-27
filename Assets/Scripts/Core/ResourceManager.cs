@@ -24,6 +24,7 @@ namespace Core
         void Start()
         {
             TimeManager.Instance.OnYearChanged += AddRandomResources;
+            GetResourcesAmount();
         }
 
         private void GenerateRandomResources()

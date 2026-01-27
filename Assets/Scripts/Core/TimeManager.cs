@@ -1,4 +1,5 @@
 using System;
+using UI.Controllers;
 using UnityEngine;
 
 namespace Core
@@ -28,6 +29,11 @@ namespace Core
             CurrentYear = startYear;
         }
 
+        void Start()
+        {
+            isPaused = true;
+            MainMenuBtnController.Instance.OnGameStart += () => isPaused = false;
+        }
 
         void FixedUpdate()
         {
