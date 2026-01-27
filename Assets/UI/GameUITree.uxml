@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
+         editor-extension-mode="False">
+    <ui:Label text="amount" name="Vodka" emoji-fallback-support="false"/>
+    <ui:Label text="Quest Amount" name="Quest_Request"/>
+</ui:UXML>
