@@ -18,28 +18,28 @@ public class ResourceUIManager : MonoBehaviour
     private VisualElement _root;
 
     private List<Label> _resourceLabels = new List<Label>();
+    private Dictionary<string, Label> _labelCache = new Dictionary<string, Label>();
 
     void Awake()
     {
-        uiDocument = GetComponent<UIDocument>();
         _resourceLabels = uiDocument.rootVisualElement.Query<Label>().ToList();
-
         var amounts = resourceManager.GetResourcesAmount();
         SetupResourcesUI(amounts);
+    }
+
+    private void CacheLabels()
+    {
+        foreach (var label in _resourceLabels)
+        {
+            _labelCache[label.name] = label;
+        }
     }
 
     //The name of the ScriptableObject name must match the Labels name
     private void SetupResourcesUI(Dictionary<Resource, int> resources)
     {
-        foreach (var resourceLabel in _resourceLabels)
+        foreach (var resource in resources)
         {
-            foreach (var resource in resources)
-            {
-                if (resourceLabel.name == resource.Key.resourceName)
-                {
-                    resourceLabel.text = resource.Value.ToString();
-                }
-            }
         }
     }
 
