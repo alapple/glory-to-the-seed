@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Data.Dialogs;
 using Data.Events;
 using Data.Region;
 using UnityEngine;
@@ -34,6 +35,7 @@ namespace Core
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
         public event Action<GameEvent, string> OnEventAppear;
+        public static event Action<Dialog, string> OnDialogTriggered;
 
         private float _randomCheckTimer;
 
@@ -131,8 +133,16 @@ namespace Core
         private void AddEvent(GameEvent evt)
         {
             if (_activePenalties.ContainsKey(evt)) return;
+    
             OnEventAppear?.Invoke(evt, region.regionName);
             _activePenalties.Add(evt, evt.basePenalty);
+
+            if (evt.dialog != null)
+            {
+                OnDialogTriggered?.Invoke(evt.dialog, region.regionName);
+                Debug.Log($"Dialog triggered for region {region.regionName}");
+            }
+
             if (evt.getsWorsOverTime)
             {
                 Coroutine timer = StartCoroutine(WorsenRoutine(evt));

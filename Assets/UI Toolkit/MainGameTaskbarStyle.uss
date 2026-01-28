@@ -17,7 +17,7 @@
 }
 
 .button2 {
-    margin-top: 29px;
+    margin-top: 17px;
     position: relative;
     align-self: flex-start;
     justify-content: flex-start;
