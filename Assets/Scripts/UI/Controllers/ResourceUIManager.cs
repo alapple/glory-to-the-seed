@@ -8,70 +8,118 @@ using Resource = Data.Resources.Resources;
 /*
  * Manage the resource bar and the potato amount display of the quest
  */
-public class ResourceUIManager : MonoBehaviour
+namespace UI.Controllers
 {
-    [SerializeField] private UIDocument uiDocument;
-    [SerializeField] private ResourceManager resourceManager;
-
-    private VisualElement _root;
-
-    private List<Label> _resourceLabels = new List<Label>();
-    private Dictionary<string, Label> _labelCache = new Dictionary<string, Label>();
-
-    void Awake()
+    public class ResourceUIManager : MonoBehaviour
     {
-        _resourceLabels = uiDocument.rootVisualElement.Query<Label>().ToList();
-        CacheLabels();
-        var amounts = resourceManager.GetResourcesAmount();
-        SetupResourcesUI(amounts);
-    }
+        public static ResourceUIManager Instance;
+        
+        [SerializeField] private UIDocument uiDocument;
+        [SerializeField] private ResourceManager resourceManager;
 
-    private void CacheLabels()
-    {
-        foreach (var label in _resourceLabels)
+        private VisualElement _root;
+
+        private List<Label> _resourceLabels = new List<Label>();
+        private Dictionary<string, Label> _labelCache = new Dictionary<string, Label>();
+        
+        private VisualElement _resourceAllocator;
+        private Label _potatoPerSecond;
+
+        void Awake()
         {
-            _labelCache[label.name] = label;
+            Instance = this;
+            _resourceLabels = uiDocument.rootVisualElement.Query<Label>().ToList();
+            CacheLabels();
+            var amounts = resourceManager.GetResourcesAmount();
+            SetupResourcesUI(amounts);
+            _resourceAllocator = uiDocument.rootVisualElement.Q<VisualElement>("Field_Manager");
+            HideResourceAllocator();
         }
-    }
 
-    //The name of the ScriptableObject name must match the Labels name
-    private void SetupResourcesUI(Dictionary<Resource, int> resources)
-    {
-        foreach (var resource in resources)
+        private void FixedUpdate()
         {
-            if (_labelCache.TryGetValue(resource.Key.resourceName, out var label))
+            var amounts = resourceManager.GetResourcesAmount();
+            SetupResourcesUI(amounts);
+        }
+
+        private void CacheLabels()
+        {
+            foreach (var label in _resourceLabels)
             {
-                label.text = resource.Value.ToString();
+                _labelCache[label.name] = label;
             }
         }
 
-        if (_labelCache["Potato"] != null)
+        //The name of the ScriptableObject name must match the Labels name
+        private void SetupResourcesUI(Dictionary<Resource, int> resources)
         {
-            _labelCache.TryGetValue("Potato", out var potato);
-            potato.text = "0";
-        }
-    }
-
-    public void ChangeResources(string uiTreeName, int amount)
-    {
-        var resources = resourceManager.resources;
-        Resource resourceChanged = null;
-        foreach (var resource in resources)
-        {
-            if (resource.name == uiTreeName)
+            foreach (var resource in resources)
             {
-                Debug.Log(resource.name);
-                resourceChanged = resource;
+                if (_labelCache.TryGetValue(resource.Key.resourceName, out var label))
+                {
+                    label.text = resource.Value.ToString();
+                }
+            }
+            /*
+            if (_labelCache["Potato"] != null)
+            {
+                _labelCache.TryGetValue("Potato", out var potato);
+                potato.text = "0";
+            }
+            */
+        }
+
+        public void UpdatePotatoPerSecond(int amount)
+        {
+            if (_labelCache.TryGetValue("PotatoPerSecond", out var potatoPerSecond))
+            {
+                potatoPerSecond.text = amount.ToString("0000") + "/s";
             }
         }
 
-        foreach (var resourceLabel in _resourceLabels)
+        public void ChangeResources(string uiTreeName, int amount)
         {
-            if (resourceLabel.name == uiTreeName)
+            var resources = resourceManager.resources;
+            Resource resourceChanged = null;
+            foreach (var resource in resources)
             {
-                resourceLabel.text = (Int32.Parse(resourceLabel.text) + amount).ToString();
-                resourceManager.AddResource(resourceChanged, amount);
+                if (resource.name == uiTreeName)
+                {
+                    Debug.Log(resource.name);
+                    resourceChanged = resource;
+                }
             }
+
+            foreach (var resourceLabel in _resourceLabels)
+            {
+                if (resourceLabel.name == uiTreeName)
+                {
+                    resourceLabel.text = (Int32.Parse(resourceLabel.text) + amount).ToString();
+                    resourceManager.AddResource(resourceChanged, amount);
+                }
+            }
+        }
+
+        public void ShowResourceAllocator()
+        {
+            _resourceAllocator.style.display = DisplayStyle.Flex;
+        }
+
+        public void HideResourceAllocator()
+        {
+            _resourceAllocator.style.display = DisplayStyle.None;
+        }
+
+        // Check if the pointer is over the UI
+        public bool IsPointerOverUI(Vector2 screenPosition)
+        {
+            IPanel panel = uiDocument.rootVisualElement.panel;
+    
+            Vector2 panelPosition = RuntimePanelUtils.ScreenToPanel(panel, screenPosition);
+
+            VisualElement pickedElement = panel.Pick(panelPosition);
+
+            return pickedElement != null && pickedElement != uiDocument.rootVisualElement;
         }
     }
 }

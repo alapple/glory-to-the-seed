@@ -17,8 +17,8 @@ namespace Core
 
         public float randomEventCheckInterval = 5f;
 
-        public int Happiness { get; set; }
-        public int Production { get; set; }
+        public int happiness;
+        public int production;
 
         public List<GameEvent> events;
 
@@ -28,6 +28,7 @@ namespace Core
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
+        // private readonly Dictionary<Resource, int> _eventResolversCount = new();
 
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
@@ -37,15 +38,15 @@ namespace Core
 
         void Awake()
         {
-            Happiness = region.baseHappiness;
-            Production = (int)(region.baseProduction * region.productionModifier);
+            happiness = region.baseHappiness;
+            production = (int)(region.baseProduction * region.productionModifier);
         }
 
         void Start()
         {
             TimeManager.Instance.OnStatsChange += () =>
             {
-                AddPotatoes(Production);
+                AddPotatoes(production);
                 CalculateHappiness();
             };
         }
@@ -172,12 +173,13 @@ namespace Core
                 totalPenalty += penalty;
             }
 
-            Production =
-                (int)Math.Clamp((workerCount * region.baseProduction) * (0.5f + Happiness / 100f) * (1 - totalPenalty),
+            production =
+                (int)Math.Clamp((workerCount * region.baseProduction) * (0.5f + happiness / 100f) - totalPenalty,
                     0, int.MaxValue);
+            Debug.Log($"Production: {production}");
         }
 
-        private void AddPotatoes(int amount)
+        private static void AddPotatoes(int amount)
         {
             ResourceManager.Instance.AddPotatoes(amount);
         }
@@ -186,8 +188,8 @@ namespace Core
         {
             switch (type)
             {
-                case StatType.Happiness: return Happiness;
-                case StatType.Production: return Production;
+                case StatType.Happiness: return happiness;
+                case StatType.Production: return production;
                 default: return 0;
             }
         }
@@ -198,11 +200,11 @@ namespace Core
 
             if (canEat)
             {
-                Happiness += eatingModifier;
+                happiness += eatingModifier;
             }
             else
             {
-                Happiness -= starvingModifier;
+                happiness -= starvingModifier;
             }
         }
 
@@ -210,8 +212,8 @@ namespace Core
         {
             switch (resource.statType)
             {
-                case StatType.Happiness: Happiness += resource.statModifier; break;
-                case StatType.Production: Production += resource.statModifier; break;
+                case StatType.Happiness: happiness += resource.statModifier; break;
+                case StatType.Production: production += resource.statModifier; break;
             }
         }
 

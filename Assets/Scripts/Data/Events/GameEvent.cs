@@ -5,6 +5,7 @@ using Utils;
 
 namespace Data.Events
 {
+    [CreateAssetMenu(menuName = "Event")]
     public class GameEvent : ScriptableObject
     {
         public bool isThresholdEvent;
