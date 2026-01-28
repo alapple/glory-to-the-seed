@@ -153,7 +153,6 @@ MonoBehaviour:
   - {fileID: -6594894889874384173, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
   - {fileID: -823233644, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
   - {fileID: -862494972, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
-  declineScene: {fileID: 102900000, guid: 15ed89926ecf3d04a8588edf6077f8fa, type: 3}
   declineSceneName: DeclineScene
 --- !u!4 &349353564
 Transform:
@@ -1403,7 +1402,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499c4d5a3f144d2b83af390d04a3932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.SelectFieldController
-  regionController: {fileID: 0}
+  regionController: {fileID: 1442447546}
+--- !u!114 &1442447546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1442447540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cb555203fa4e50bf4d317c2e561626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.RegionController
+  region: {fileID: 11400000, guid: d5ce3d92a48c0d47d81a122bd8ed4e09, type: 2}
+  randomEventCheckInterval: 5
+  happiness: 0
+  production: 0
+  events:
+  - {fileID: 11400000, guid: a0c2293b52151d25b813ce6d63fc278a, type: 2}
+  - {fileID: 11400000, guid: 9bd74d2f7e3f66d4e845fed0b7cf5997, type: 2}
+  starvingModifier: 0
+  eatingModifier: 0
+  assignedWorkers: 0
 --- !u!1 &1461264837
 GameObject:
   m_ObjectHideFlags: 0

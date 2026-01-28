@@ -147,6 +147,7 @@ namespace UI.Controllers
 
         private void OnAcceptClicked(ClickEvent evt)
         {
+            ButtonSoundManager.Instance?.PlayButtonClick();
             evt.StopPropagation();
             HideEnvelope();
             OnQuestAccepted?.Invoke();
@@ -155,6 +156,7 @@ namespace UI.Controllers
 
         private void OnDeclineClicked(ClickEvent evt)
         {
+            ButtonSoundManager.Instance?.PlayButtonClick();
             evt.StopPropagation();
             HideEnvelope();
             OnQuestDeclined?.Invoke();

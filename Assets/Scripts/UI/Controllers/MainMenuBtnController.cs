@@ -41,16 +41,19 @@ namespace UI.Controllers
 
         private void OnQuitButtonClick(ClickEvent evt)
         {
+            ButtonSoundManager.Instance?.PlayButtonClick();
             Application.Quit();
         }
 
         private void OnCreditButtonclick(ClickEvent evt)
         {
+            ButtonSoundManager.Instance?.PlayButtonClick();
             SceneManager.LoadScene("Credits");
         }
 
         private void OnStartButtonClick(ClickEvent evt)
         {
+            ButtonSoundManager.Instance?.PlayButtonClick();
             mainMenuDocument.rootVisualElement.style.display = DisplayStyle.None;
             
             // Start the envelope sequence instead of directly starting the game
