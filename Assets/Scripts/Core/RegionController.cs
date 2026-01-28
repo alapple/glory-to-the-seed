@@ -3,11 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Data.Events;
 using Data.Region;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Utils;
+using Resource = Data.Resources.Resources;
 using Random = UnityEngine.Random;
-using Resources = Data.Resources.Resources;
 
 namespace Core
 {
@@ -25,10 +24,12 @@ namespace Core
         public int starvingModifier;
         public int eatingModifier;
 
+        [Header("Population")]
+        public int assignedWorkers;
+        
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
-        // private readonly Dictionary<Resource, int> _eventResolversCount = new();
 
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
@@ -49,6 +50,8 @@ namespace Core
                 AddPotatoes(production);
                 CalculateHappiness();
             };
+            
+            ResourceManager.Instance.TryAssignWorkerToRegion(this, 5);
         }
 
         public void FixedUpdate()
@@ -64,6 +67,38 @@ namespace Core
             }
         }
 
+        public void HandleResourceDrop(Resource resource, int amount)
+        {
+            if (resource.resourceName == "Workers")
+            {
+                ResourceManager.Instance.TryAssignWorkerToRegion(this, amount);
+                return;
+            }
+
+            if (DoesEventNeedResource(resource))
+            {
+                if (ResourceManager.Instance.TryConsumeResource(resource, amount))
+                {
+                    TrySolveEvent(resource, amount);
+                }
+                return;
+            }
+
+            if (ResourceManager.Instance.TryConsumeResource(resource, amount))
+            {
+                AllocateResources(resource);
+            }
+        }
+
+        private bool DoesEventNeedResource(Resource resource)
+        {
+            foreach (var evt in _activePenalties.Keys)
+            {
+                if (evt.resourcesToResolve.Contains(resource)) return true;
+            }
+            return false;
+        }
+
         private void CheckThresholdEvent()
         {
             foreach (var evt in events)
@@ -72,16 +107,12 @@ namespace Core
                 if (_activePenalties.ContainsKey(evt)) continue;
 
                 bool conditionMet;
-
                 float currentVal = GetStatValue(evt.thresholdStat);
 
                 if (evt.triggerOnLower) conditionMet = currentVal < evt.thresholdValue;
                 else conditionMet = currentVal > evt.thresholdValue;
 
-                if (conditionMet)
-                {
-                    AddEvent(evt);
-                }
+                if (conditionMet) AddEvent(evt);
             }
         }
 
@@ -93,11 +124,7 @@ namespace Core
                 if (_activePenalties.ContainsKey(evt)) continue;
 
                 float roll = Random.Range(0f, 100f);
-
-                if (roll <= evt.randomChance * region.randomEventModifier)
-                {
-                    AddEvent(evt);
-                }
+                if (roll <= evt.randomChance * region.randomEventModifier) AddEvent(evt);
             }
         }
 
@@ -124,25 +151,24 @@ namespace Core
                     _activePenalties[evt] += evt.intervalPenalty;
                     OnEventWorsened?.Invoke(evt, _activePenalties[evt]);
                 }
+                else yield break;
             }
         }
 
-        public void TrySolveEvent(Resources resource, int amountToAdd)
+        private void TrySolveEvent(Resource resource, int amountToAdd)
         {
             foreach (var evt in _activePenalties.Keys)
             {
                 if (evt.resourcesToResolve.Contains(resource))
                 {
-                    PayForEvent(evt, amountToAdd, resource);
+                    PayForEvent(evt, amountToAdd);
                     return;
                 }
             }
         }
 
-        private void PayForEvent(GameEvent evt, int amount, Resources resource)
+        private void PayForEvent(GameEvent evt, int amount)
         {
-            ResourceManager.Instance.AddResource(resource, -amount);
-
             _eventResolvers.TryAdd(evt, 0);
             _eventResolvers[evt] += amount;
 
@@ -156,8 +182,11 @@ namespace Core
         {
             if (_activePenalties.ContainsKey(evt))
             {
-                StopCoroutine(_activeTimers[evt]);
-                _activeTimers.Remove(evt);
+                if(_activeTimers.ContainsKey(evt))
+                {
+                    StopCoroutine(_activeTimers[evt]);
+                    _activeTimers.Remove(evt);
+                }
                 _activePenalties.Remove(evt);
                 _eventResolvers.Remove(evt);
                 OnEventResolved?.Invoke();
@@ -166,17 +195,13 @@ namespace Core
 
         private void CalculateProduction()
         {
-            int workerCount = CalculateTotalWorkers();
             float totalPenalty = 0;
             foreach (float penalty in _activePenalties.Values)
             {
                 totalPenalty += penalty;
             }
 
-            production =
-                (int)Math.Clamp((workerCount * region.baseProduction) * (0.5f + happiness / 100f) - totalPenalty,
-                    0, int.MaxValue);
-            Debug.Log($"Production: {production}");
+            production = (int)Math.Clamp((assignedWorkers * region.baseProduction) * (0.5f + happiness / 100f) - totalPenalty, 0, int.MaxValue);
         }
 
         private static void AddPotatoes(int amount)
@@ -196,38 +221,25 @@ namespace Core
 
         private void CalculateHappiness()
         {
-            bool canEat = ResourceManager.Instance.ConsumePotatoes(-CalculateTotalWorkers());
+            bool canEat = ResourceManager.Instance.ConsumePotatoes(assignedWorkers * 10);
 
-            if (canEat)
-            {
-                happiness += eatingModifier;
-            }
-            else
-            {
-                happiness -= starvingModifier;
-            }
+            if (canEat) happiness += eatingModifier;
+            else happiness -= starvingModifier;
+            
+            happiness = Math.Clamp(happiness, 0, 100);  
         }
 
-        public void AllocateResources(Resources resource)
+        public void AllocateResources(Resource resource)
         {
             switch (resource.statType)
             {
-                case StatType.Happiness: happiness += resource.statModifier; break;
-                case StatType.Production: production += resource.statModifier; break;
+                case StatType.Happiness: 
+                    happiness = Math.Clamp(happiness + resource.statModifier, 0, 100); 
+                    break;
+                case StatType.Production: 
+                    production = Math.Clamp(production + resource.statModifier, 0, int.MaxValue); 
+                    break;
             }
-        }
-
-        private int CalculateTotalWorkers()
-        {
-            foreach (var res in ResourceManager.Instance.GetResourcesAmount())
-            {
-                if (res.Key.resourceName == "Workers")
-                {
-                    return res.Value;
-                }
-            }
-
-            return 0;
         }
     }
 }
