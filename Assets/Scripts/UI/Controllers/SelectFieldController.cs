@@ -9,6 +9,9 @@ namespace UI.Controllers
     {
         private PolygonCollider2D _field;
         [SerializeField] private RegionController regionController;
+        
+        private static SelectFieldController _activeField;
+        private bool _isActive;
 
         void Start()
         {
@@ -31,7 +34,20 @@ namespace UI.Controllers
                 
                 if (_field.OverlapPoint(mousePos2D))
                 {
-                    ResourceUIManager.Instance.ShowResourceAllocator();
+                    // Wenn dieses Feld bereits aktiv ist, schließe es
+                    if (_activeField == this && _isActive)
+                    {
+                        ResourceUIManager.Instance.HideResourceAllocator();
+                        _isActive = false;
+                        _activeField = null;
+                    }
+                    // Nur öffnen wenn kein anderes Feld aktiv ist
+                    else if (_activeField == null)
+                    {
+                        ResourceUIManager.Instance.ShowResourceAllocator(regionController);
+                        _activeField = this;
+                        _isActive = true;
+                    }
                 }
             }
             ResourceUIManager.Instance.UpdatePotatoPerSecond(regionController.production);
