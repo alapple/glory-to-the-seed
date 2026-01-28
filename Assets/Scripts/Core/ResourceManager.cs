@@ -40,7 +40,7 @@ namespace Core
         {
             foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
             {
-                if (resource.resourceName == "Potatoes") continue;
+                if (resource.resourceName == "Potato") continue;
                 _resourcesAmount[resource] += Random.Range(resource.minValue, resource.maxValue);
                 OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
             }
@@ -56,7 +56,7 @@ namespace Core
         {
             foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
             {
-                if (resource.resourceName != "Potatoes") continue;
+                if (resource.resourceName != "Potato") continue;
                 Math.Clamp(_resourcesAmount[resource] += amount, 0, int.MaxValue);
             }
         }
@@ -65,7 +65,7 @@ namespace Core
         {
             foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
             {
-                if (resource.resourceName != "Potatoes") continue;
+                if (resource.resourceName != "Potato") continue;
                 _resourcesAmount[resource] -= amount;
                 if (_resourcesAmount[resource] <= 0)
                 {

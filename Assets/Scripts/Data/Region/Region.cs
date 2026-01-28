@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Data.Region
 {
+    [CreateAssetMenu(menuName = "Region")]
     public class Region : ScriptableObject
     {
         public string regionName;
