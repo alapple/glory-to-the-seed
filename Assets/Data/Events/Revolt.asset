@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c65edc6ae68de9b4fbe809556bb6f008, type: 3}
+  m_Name: Revolt
+  m_EditorClassIdentifier: Assembly-CSharp::Data.Events.GameEvent
+  isThresholdEvent: 1
+  thresholdStat: 0
+  thresholdValue: 20
+  triggerOnLower: 1
+  basePenalty: 5
+  getsWorsOverTime: 1
+  interval: 2
+  intervalPenalty: 5
+  resourcesToResolve:
+  - {fileID: 11400000, guid: 1930de40b29d8f8ce9a1897642da210e, type: 2}
+  - {fileID: 11400000, guid: 11c0475d6992ee9f1b24e37a1cfa8b19, type: 2}
+  resourcesNeeded: 2
+  dialog: {fileID: 0}
+  randomChance: 0
