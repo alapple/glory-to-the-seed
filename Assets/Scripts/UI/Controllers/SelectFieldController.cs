@@ -34,14 +34,12 @@ namespace UI.Controllers
                 
                 if (_field.OverlapPoint(mousePos2D))
                 {
-                    // Wenn dieses Feld bereits aktiv ist, schließe es
                     if (_activeField == this && _isActive)
                     {
                         ResourceUIManager.Instance.HideResourceAllocator();
                         _isActive = false;
                         _activeField = null;
                     }
-                    // Nur öffnen wenn kein anderes Feld aktiv ist
                     else if (_activeField == null)
                     {
                         ResourceUIManager.Instance.ShowResourceAllocator(regionController);
@@ -50,7 +48,7 @@ namespace UI.Controllers
                     }
                 }
             }
-            ResourceUIManager.Instance.UpdatePotatoPerSecond(regionController.production);
+            //ResourceUIManager.Instance.UpdatePotatoPerSecond(regionController.production);
         }
     }
 }
