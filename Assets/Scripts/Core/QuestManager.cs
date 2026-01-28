@@ -37,8 +37,9 @@ namespace Core
             {
                 foreach (var res in resourceManager.GetResourcesAmount())
                 {
-                    if (res.Key.resourceName.Equals("Potatoes"))
+                    if (res.Key.resourceName.Equals("Potato"))
                     {
+                        Debug.Log($"Game Over! Potatoes: {res.Value}, Goal: {PotatoGoal}");
                         if (res.Value >= PotatoGoal)
                         {
                             OnQuestCompleted?.Invoke(true);
@@ -47,10 +48,12 @@ namespace Core
                         {
                             OnQuestCompleted?.Invoke(false);
                         }
+                        return;
                     } 
                 }
+                Debug.LogWarning("QuestManager: Potato resource not found!");
             };
-            PotatoGoal = Random.Range(minValue, maxValue);;
+            PotatoGoal = Random.Range(minValue, maxValue);
         }
     }
 }
