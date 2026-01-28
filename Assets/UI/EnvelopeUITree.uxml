@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="EnvelopeContainer" style="flex-grow: 1; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.85); background-image: url(&quot;project://database/Assets/Art/Sprites/Animations/GJ_Government_Letter.png?fileID=-862494972&amp;guid=cbfa82159d630f940acfa87b1c9cc4a9&amp;type=3#GJ_Government_Letter_2&quot;);">
+        <ui:VisualElement name="EnvelopeImage" style="width: 1930px; height: 1071px; -unity-background-scale-mode: scale-to-fit; position: relative;">
+            <ui:Button name="AcceptButton" style="position: absolute; left: 721px; bottom: 607px; width: 195px; height: 37px; background-color: rgba(0, 0, 0, 0); border-width: 0;"/>
+            <ui:Button name="DeclineButton" style="position: absolute; right: 698px; bottom: 607px; width: 190px; height: 37px; background-color: rgba(0, 0, 0, 0); border-width: 0;"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
