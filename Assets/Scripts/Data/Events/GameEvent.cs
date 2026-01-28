@@ -5,16 +5,16 @@ using Utils;
 
 namespace Data.Events
 {
-    public abstract class GameEvent : ScriptableObject
+    public class GameEvent : ScriptableObject
     {
-        public abstract bool IsThresholdEvent { get; }
+        public bool isThresholdEvent;
 
         public StatType thresholdStat;
         public float thresholdValue;
         public bool triggerOnLower;
 
         public int basePenalty;
-        public abstract bool GetsWorsOverTime { get; }
+        public bool getsWorsOverTime;
         public float interval;
         public int intervalPenalty;
 
