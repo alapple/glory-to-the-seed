@@ -52,8 +52,8 @@ namespace Core
             if (_statsTimer >= 1.0f)
             {
                 OnStatsChange?.Invoke();
+                _statsTimer = 0f;
             }
-            
         }
 
         private void AdvanceMonth()
