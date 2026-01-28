@@ -19,6 +19,18 @@ namespace Core
         
         public event Action<bool> OnQuestCompleted;
 
+        void Awake()
+        {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+
         private void Start()
         {
             TimeManager.Instance.OnGameOver += () =>
