@@ -16,12 +16,12 @@ MonoBehaviour:
   thresholdStat: 0
   thresholdValue: 0
   triggerOnLower: 0
-  basePenalty: 3
+  basePenalty: 10
   getsWorsOverTime: 1
   interval: 4
-  intervalPenalty: 1
+  intervalPenalty: 10
   resourcesToResolve:
   - {fileID: 11400000, guid: 665f2ee35ed8208bf9758fe52465f54b, type: 2}
   resourcesNeeded: 2
   dialog: {fileID: 0}
-  randomChance: 6.7
+  randomChance: 5.9

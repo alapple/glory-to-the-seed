@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Field2
   m_EditorClassIdentifier: Assembly-CSharp::Data.Region.Region
   regionName: Field2
-  baseHappiness: 100
+  baseHappiness: 2
   baseProduction: 10
   productionModifier: 1.45
   randomEventModifier: 1.45

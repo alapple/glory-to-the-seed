@@ -7,34 +7,27 @@ namespace Core
 {
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField]
-        private ResourceManager resourceManager;
+        [SerializeField] private ResourceManager resourceManager;
         public static QuestManager Instance;
 
         public int minValue;
 
         public int maxValue;
-        
-        private int PotatoGoal { get; set;}
-        
+
+        private int PotatoGoal { get; set; }
+
         public event Action<bool> OnQuestCompleted;
 
         void Awake()
         {
-            if (Instance == null)
-            {
-                Instance = this;
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
+            Instance = this;
         }
 
         private void Start()
         {
             TimeManager.Instance.OnGameOver += () =>
             {
+                Debug.Log("Game Over!");
                 foreach (var res in resourceManager.GetResourcesAmount())
                 {
                     if (res.Key.resourceName.Equals("Potato"))
@@ -43,13 +36,16 @@ namespace Core
                         if (res.Value >= PotatoGoal)
                         {
                             OnQuestCompleted?.Invoke(true);
+                            Debug.Log("Quest completed!");
                         }
                         else
                         {
                             OnQuestCompleted?.Invoke(false);
+                            Debug.Log("Quest failed!");
                         }
+
                         return;
-                    } 
+                    }
                 }
                 Debug.LogWarning("QuestManager: Potato resource not found!");
             };
