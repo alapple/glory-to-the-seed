@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace UI.Controllers
 {
@@ -16,7 +19,20 @@ namespace UI.Controllers
         [SerializeField] private Sprite[] envelopeAnimationFrames;
 
         [Header("Scene Settings")]
-        [SerializeField] private string declineSceneName = "DeclineScene";
+#if UNITY_EDITOR
+        [SerializeField] private SceneAsset declineScene;
+#endif
+        [SerializeField, HideInInspector] private string declineSceneName;
+
+#if UNITY_EDITOR
+        private void OnValidate()
+        {
+            if (declineScene != null)
+            {
+                declineSceneName = declineScene.name;
+            }
+        }
+#endif
 
         private VisualElement _envelopeContainer;
         private VisualElement _envelopeImage;
@@ -29,6 +45,7 @@ namespace UI.Controllers
         private int _currentFrame;
         private bool _isPlayingAnimation;
         private bool _isOnLastFrame;
+        private AsyncOperation _preloadedScene;
 
         void Awake()
         {
@@ -75,6 +92,20 @@ namespace UI.Controllers
                 _envelopeContainer.style.display = DisplayStyle.Flex;
 
             ShowFrame(0);
+            
+            // Preload the decline scene in the background
+            PreloadDeclineScene();
+        }
+
+        private void PreloadDeclineScene()
+        {
+            if (string.IsNullOrEmpty(declineSceneName)) return;
+            
+            _preloadedScene = SceneManager.LoadSceneAsync(declineSceneName);
+            if (_preloadedScene != null)
+            {
+                _preloadedScene.allowSceneActivation = false;
+            }
         }
 
         private void OnEnvelopeClicked(ClickEvent evt)
@@ -127,7 +158,22 @@ namespace UI.Controllers
             evt.StopPropagation();
             HideEnvelope();
             OnQuestDeclined?.Invoke();
-            SceneManager.LoadScene(declineSceneName);
+            
+            if (string.IsNullOrEmpty(declineSceneName))
+            {
+                Debug.LogError("EnvelopeManager: Decline scene name is not set! Please assign a scene in the Inspector.");
+                return;
+            }
+            
+            // Use preloaded scene if available for instant switching
+            if (_preloadedScene != null)
+            {
+                _preloadedScene.allowSceneActivation = true;
+            }
+            else
+            {
+                SceneManager.LoadScene(declineSceneName);
+            }
         }
 
         private void HideEnvelope()

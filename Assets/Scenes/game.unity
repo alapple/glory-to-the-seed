@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: -6594894889874384173, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
   - {fileID: -823233644, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
   - {fileID: -862494972, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
+  declineScene: {fileID: 102900000, guid: 15ed89926ecf3d04a8588edf6077f8fa, type: 3}
   declineSceneName: DeclineScene
 --- !u!4 &349353564
 Transform:
