@@ -67,7 +67,7 @@ namespace Core
         {
             foreach (var evt in events)
             {
-                if (!evt.IsThresholdEvent) continue;
+                if (!evt.isThresholdEvent) continue;
                 if (_activePenalties.ContainsKey(evt)) continue;
 
                 bool conditionMet;
@@ -88,7 +88,7 @@ namespace Core
         {
             foreach (var evt in events)
             {
-                if (evt.IsThresholdEvent) continue;
+                if (evt.isThresholdEvent) continue;
                 if (_activePenalties.ContainsKey(evt)) continue;
 
                 float roll = Random.Range(0f, 100f);
@@ -105,7 +105,7 @@ namespace Core
             if (_activePenalties.ContainsKey(evt)) return;
             OnEventAppear?.Invoke(evt, region.regionName);
             _activePenalties.Add(evt, evt.basePenalty);
-            if (evt.GetsWorsOverTime)
+            if (evt.getsWorsOverTime)
             {
                 Coroutine timer = StartCoroutine(WorsenRoutine(evt));
                 _activeTimers.Add(evt, timer);
