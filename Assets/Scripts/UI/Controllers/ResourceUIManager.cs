@@ -40,15 +40,14 @@ namespace UI.Controllers
 
         private void FixedUpdate()
         {
-            // Wenn ein Feld ausgewählt ist, zeige nur dessen Stats an
+            // Update resource UI always
+            var amounts = resourceManager.GetResourcesAmount();
+            SetupResourcesUI(amounts);
+            
+            // Wenn ein Feld ausgewählt ist, zeige dessen Stats an
             if (_currentRegion != null)
             {
                 UpdatePotatoPerSecond(_currentRegion.production);
-            }
-            else
-            {
-                var amounts = resourceManager.GetResourcesAmount();
-                SetupResourcesUI(amounts);
             }
         }
 

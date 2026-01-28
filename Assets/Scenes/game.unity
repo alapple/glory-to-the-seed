@@ -153,6 +153,7 @@ MonoBehaviour:
   - {fileID: -6594894889874384173, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
   - {fileID: -823233644, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
   - {fileID: -862494972, guid: cbfa82159d630f940acfa87b1c9cc4a9, type: 3}
+  declineScene: {fileID: 102900000, guid: 15ed89926ecf3d04a8588edf6077f8fa, type: 3}
   declineSceneName: DeclineScene
 --- !u!4 &349353564
 Transform:
@@ -198,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a976f16a6f044f698ac78b660222b7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.TimeManager
-  secondsPerMonth: 15
+  secondsPerMonth: 1
   startYear: 1965
   isPaused: 0
 --- !u!4 &450558758
@@ -1541,6 +1542,7 @@ GameObject:
   - component: {fileID: 1632936941}
   - component: {fileID: 1632936940}
   - component: {fileID: 1632936943}
+  - component: {fileID: 1632936944}
   m_Layer: 0
   m_Name: UIController
   m_TagString: Untagged
@@ -1604,6 +1606,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.ClockController
   clockDocument: {fileID: 830549882}
+--- !u!114 &1632936944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632936939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f87480d7766cbaf47bc542e823344d5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.GameOverManager
+  victoryScene: {fileID: 102900000, guid: fe0e6791cd371c940b5b1c072cbcf738, type: 3}
+  victorySceneName: VictoryScene
+  gulagScene: {fileID: 102900000, guid: dfa912cbe40a7bd49982eecb80520483, type: 3}
+  gulagSceneName: GulagScene
 --- !u!1 &1662312848
 GameObject:
   m_ObjectHideFlags: 0
