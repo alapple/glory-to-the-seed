@@ -68,6 +68,7 @@ namespace Core
                 if (CurrentYear >= startYear + 5)
                 {
                     OnGameOver?.Invoke();
+                    Debug.Log("Game Over");
                 }
 
                 OnYearChanged?.Invoke(CurrentYear);
