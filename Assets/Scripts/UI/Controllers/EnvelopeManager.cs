@@ -19,12 +19,9 @@ namespace UI.Controllers
         [SerializeField] private Sprite[] envelopeAnimationFrames;
 
         [Header("Scene Settings")]
-#if UNITY_EDITOR
         [SerializeField] private SceneAsset declineScene;
-#endif
         [SerializeField, HideInInspector] private string declineSceneName;
 
-#if UNITY_EDITOR
         private void OnValidate()
         {
             if (declineScene != null)
@@ -32,7 +29,6 @@ namespace UI.Controllers
                 declineSceneName = declineScene.name;
             }
         }
-#endif
 
         private VisualElement _envelopeContainer;
         private VisualElement _envelopeImage;
