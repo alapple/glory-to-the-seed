@@ -1,4 +1,13 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd"
          editor-extension-mode="False">
-    <ui:Button text="Accept" name="AcceptButton" double-click-selects-word="false"/>
+    <ui:VisualElement name="QuestContainer" style="flex-grow: 1; justify-content: center; align-items: center; background-color: rgba(0, 0, 0, 0.7);">
+        <ui:VisualElement name="QuestPanel" style="width: 500px; padding: 30px; background-color: rgb(45, 35, 25); border-radius: 10px; border-width: 3px; border-color: rgb(139, 90, 43);">
+            <ui:Label text="Government Order" name="QuestTitle" style="font-size: 28px; color: rgb(200, 160, 100); -unity-text-align: upper-center; margin-bottom: 20px; -unity-font-style: bold;" />
+            <ui:Label text="The Motherland requires your service! Will you accept the sacred duty of growing potatoes for the glory of the state?" name="QuestLabel" style="font-size: 18px; color: rgb(220, 200, 160); -unity-text-align: upper-center; margin-bottom: 30px; white-space: normal;" />
+            <ui:VisualElement name="ButtonContainer" style="flex-direction: row; justify-content: center; gap: 20px;">
+                <ui:Button text="For the Motherland!" name="AcceptButton" style="padding: 15px 30px; font-size: 16px; background-color: rgb(60, 100, 60); color: white; border-radius: 5px;" />
+                <ui:Button text="I refuse..." name="DeclineButton" style="padding: 15px 30px; font-size: 16px; background-color: rgb(100, 50, 50); color: white; border-radius: 5px;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

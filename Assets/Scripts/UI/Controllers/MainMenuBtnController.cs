@@ -52,6 +52,24 @@ namespace UI.Controllers
         private void OnStartButtonClick(ClickEvent evt)
         {
             mainMenuDocument.rootVisualElement.style.display = DisplayStyle.None;
+            
+            // Start the envelope sequence instead of directly starting the game
+            if (EnvelopeManager.Instance != null)
+            {
+                EnvelopeManager.Instance.StartEnvelopeSequence();
+            }
+            else
+            {
+                // Fallback: if no EnvelopeManager, start game directly
+                ContinueGameStart();
+            }
+        }
+
+        /// <summary>
+        /// Called by EnvelopeManager after the player accepts the quest
+        /// </summary>
+        public void ContinueGameStart()
+        {
             gameUIDocument.rootVisualElement.style.display = DisplayStyle.Flex;
             OnGameStart?.Invoke();
         }
