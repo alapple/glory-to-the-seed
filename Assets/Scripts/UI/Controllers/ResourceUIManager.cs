@@ -24,6 +24,8 @@ namespace UI.Controllers
         
         private VisualElement _resourceAllocator;
         private Label _potatoPerSecond;
+        
+        private RegionController _currentRegion;
 
         void Awake()
         {
@@ -38,8 +40,16 @@ namespace UI.Controllers
 
         private void FixedUpdate()
         {
-            var amounts = resourceManager.GetResourcesAmount();
-            SetupResourcesUI(amounts);
+            // Wenn ein Feld ausgewählt ist, zeige nur dessen Stats an
+            if (_currentRegion != null)
+            {
+                UpdatePotatoPerSecond(_currentRegion.production);
+            }
+            else
+            {
+                var amounts = resourceManager.GetResourcesAmount();
+                SetupResourcesUI(amounts);
+            }
         }
 
         private void CacheLabels()
@@ -100,14 +110,21 @@ namespace UI.Controllers
             }
         }
 
-        public void ShowResourceAllocator()
+        public void ShowResourceAllocator(RegionController regionController)
         {
+            _currentRegion = regionController;
             _resourceAllocator.style.display = DisplayStyle.Flex;
         }
 
         public void HideResourceAllocator()
         {
             _resourceAllocator.style.display = DisplayStyle.None;
+            _currentRegion = null;
+        }
+        
+        public RegionController GetCurrentRegion()
+        {
+            return _currentRegion;
         }
 
         // Check if the pointer is over the UI
