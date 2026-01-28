@@ -1004,6 +1004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499c4d5a3f144d2b83af390d04a3932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.SelectFieldController
+  regionController: {fileID: 0}
 --- !u!1 &1068218989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1377,6 +1378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499c4d5a3f144d2b83af390d04a3932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.SelectFieldController
+  regionController: {fileID: 0}
 --- !u!1 &1461264837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1833,6 +1835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499c4d5a3f144d2b83af390d04a3932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.SelectFieldController
+  regionController: {fileID: 0}
 --- !u!1 &2099537090
 GameObject:
   m_ObjectHideFlags: 0
