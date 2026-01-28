@@ -13,7 +13,7 @@ namespace Core
 
             foreach (var region in regions)
             {
-                counter += region.Production;
+                counter += region.production;
             }
             return counter;
         }
