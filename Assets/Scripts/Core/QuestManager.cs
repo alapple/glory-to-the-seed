@@ -7,7 +7,6 @@ namespace Core
 {
     public class QuestManager : MonoBehaviour
     {
-        [SerializeField] private ResourceManager resourceManager;
         public static QuestManager Instance;
 
         public int minValue;
@@ -28,7 +27,7 @@ namespace Core
             TimeManager.Instance.OnGameOver += () =>
             {
                 Debug.Log("Game Over!");
-                foreach (var res in resourceManager.GetResourcesAmount())
+                foreach (var res in ResourceManager.Instance.GetResourcesAmount())
                 {
                     if (res.Key.resourceName.Equals("Potato"))
                     {

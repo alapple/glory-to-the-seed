@@ -65,9 +65,10 @@ namespace Core
             {
                 CurrentMonth = 1;
                 CurrentYear++;
-                if (CurrentYear >= startYear + 1)
+                if (CurrentYear >= startYear + 5)
                 {
                     OnGameOver?.Invoke();
+                    Debug.Log("Game Over");
                 }
 
                 OnYearChanged?.Invoke(CurrentYear);
