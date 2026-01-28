@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: a21c8c3c36dc6f246a12f9358a822a53
+guid: ba016daf0a578ce4881a927d75735cc9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2511086474883412137
-    second: Field_Panel_Button_0
+      213: -6088959859102990242
+    second: GJ_Logo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Field_Panel_Button_0
+      name: GJ_Logo_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 40
-        height: 11
+        x: 19
+        y: 5
+        width: 106
+        height: 118
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9a0b6b738db29d220800000000000000
-      internalID: 2511086474883412137
+      spriteID: e50cd82d44baf7ba0800000000000000
+      internalID: -6088959859102990242
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Field_Panel_Button_0: 2511086474883412137
+      GJ_Logo_0: -6088959859102990242
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
