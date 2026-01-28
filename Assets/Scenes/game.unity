@@ -823,6 +823,7 @@ GameObject:
   - component: {fileID: 1011598070}
   - component: {fileID: 1011598072}
   - component: {fileID: 1011598073}
+  - component: {fileID: 1011598074}
   m_Layer: 0
   m_Name: Field2Animation
   m_TagString: Untagged
@@ -1005,7 +1006,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499c4d5a3f144d2b83af390d04a3932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.SelectFieldController
-  regionController: {fileID: 0}
+  regionController: {fileID: 1011598074}
+--- !u!114 &1011598074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1011598068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cb555203fa4e50bf4d317c2e561626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.RegionController
+  region: {fileID: 11400000, guid: 729a4a51074da00eb878cecf5c8e1318, type: 2}
+  randomEventCheckInterval: 5
+  happiness: 0
+  production: 0
+  events:
+  - {fileID: 11400000, guid: a0c2293b52151d25b813ce6d63fc278a, type: 2}
+  - {fileID: 11400000, guid: 9bd74d2f7e3f66d4e845fed0b7cf5997, type: 2}
+  starvingModifier: 0
+  eatingModifier: 0
+  assignedWorkers: 0
 --- !u!1 &1068218989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1201,6 +1224,7 @@ GameObject:
   - component: {fileID: 1442447542}
   - component: {fileID: 1442447544}
   - component: {fileID: 1442447545}
+  - component: {fileID: 1442447546}
   m_Layer: 0
   m_Name: Field3Animation
   m_TagString: Untagged
@@ -1467,6 +1491,10 @@ MonoBehaviour:
   resources:
   - {fileID: 11400000, guid: 11c0475d6992ee9f1b24e37a1cfa8b19, type: 2}
   - {fileID: 11400000, guid: 2c21688db2e91974e9aa74765b476dfc, type: 2}
+  - {fileID: 11400000, guid: 1930de40b29d8f8ce9a1897642da210e, type: 2}
+  - {fileID: 11400000, guid: 665f2ee35ed8208bf9758fe52465f54b, type: 2}
+  - {fileID: 11400000, guid: daf8c5a0d2714eb4dad4eb6cbe8c4646, type: 2}
+  - {fileID: 11400000, guid: e6414ecc0e3e6e7d8be3af7093d8b432, type: 2}
 --- !u!4 &1531219341
 Transform:
   m_ObjectHideFlags: 0
@@ -1661,6 +1689,7 @@ GameObject:
   - component: {fileID: 1784604418}
   - component: {fileID: 1784604420}
   - component: {fileID: 1784604421}
+  - component: {fileID: 1784604422}
   m_Layer: 0
   m_Name: Field1Animation
   m_TagString: Untagged
@@ -1836,7 +1865,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 499c4d5a3f144d2b83af390d04a3932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.Controllers.SelectFieldController
-  regionController: {fileID: 0}
+  regionController: {fileID: 1784604422}
+--- !u!114 &1784604422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784604416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0cb555203fa4e50bf4d317c2e561626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Core.RegionController
+  region: {fileID: 11400000, guid: 1a2e2ce963dab39acaaa5d868da69c8d, type: 2}
+  randomEventCheckInterval: 5
+  happiness: 0
+  production: 0
+  events:
+  - {fileID: 11400000, guid: a0c2293b52151d25b813ce6d63fc278a, type: 2}
+  - {fileID: 11400000, guid: 9bd74d2f7e3f66d4e845fed0b7cf5997, type: 2}
+  starvingModifier: 0
+  eatingModifier: 0
+  assignedWorkers: 0
 --- !u!1 &2099537090
 GameObject:
   m_ObjectHideFlags: 0

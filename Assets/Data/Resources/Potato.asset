@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c3b1fd1c4c48928575656f75d6ea9d, type: 3}
   m_Name: Potato
   m_EditorClassIdentifier: Assembly-CSharp::Data.Resources.Resources
-  resourceName: 
+  resourceName: Potato
   sprite: {fileID: 0}
   minValue: 0
   maxValue: 0
   statType: 0
-  statModifier: 0
+  statModifier: 1
