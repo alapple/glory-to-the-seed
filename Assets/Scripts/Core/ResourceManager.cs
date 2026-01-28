@@ -32,7 +32,6 @@ namespace Core
             foreach (Resource res in resources)
             {
                 _resourcesAmount.Add(res, Random.Range(res.minValue, res.maxValue));
-                Debug.Log($"Added {res} with amount {_resourcesAmount[res]}");
             }
         }
 
@@ -41,45 +40,88 @@ namespace Core
             foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
             {
                 if (resource.resourceName == "Potato") continue;
-                _resourcesAmount[resource] += Random.Range(resource.minValue, resource.maxValue);
-                OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
+                AddResource(resource, Random.Range(resource.minValue, resource.maxValue));
             }
         }
 
         public void AddResource(Resource resource, int amount)
         {
-            _resourcesAmount[resource] += amount;
+            int current = _resourcesAmount.ContainsKey(resource) ? _resourcesAmount[resource] : 0;
+            _resourcesAmount[resource] = Math.Clamp(current + amount, 0, int.MaxValue);
             OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
         }
 
         public void AddPotatoes(int amount)
         {
-            foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
+            foreach (var resource in _resourcesAmount.Keys)
             {
-                if (resource.resourceName != "Potato") continue;
-                Math.Clamp(_resourcesAmount[resource] += amount, 0, int.MaxValue);
+                if (resource.resourceName == "Potato")
+                {
+                    AddResource(resource, amount);
+                    return;
+                }
             }
         }
 
         public bool ConsumePotatoes(int amount)
         {
-            foreach (var resource in new List<Resource>(_resourcesAmount.Keys))
+            foreach (var resource in _resourcesAmount.Keys)
             {
-                if (resource.resourceName != "Potato") continue;
-                _resourcesAmount[resource] -= amount;
-                if (_resourcesAmount[resource] <= 0)
+                if (resource.resourceName == "Potato")
                 {
-                    _resourcesAmount[resource] = 0;
-                    return false;
+                    return TryConsumeResource(resource, amount);
                 }
             }
-            return true;
+            return false;
         }
-
-
+        
         public Dictionary<Resource, int> GetResourcesAmount()
         {
             return _resourcesAmount;
+        }
+        
+        public bool TryConsumeResource(Resource resource, int amount)
+        {
+            if (_resourcesAmount.ContainsKey(resource) && _resourcesAmount[resource] >= amount)
+            {
+                _resourcesAmount[resource] -= amount;
+                OnResourceChanged?.Invoke(resource, _resourcesAmount[resource]);
+                return true;
+            }
+            return false;
+        }
+        
+        public Resource GetResourceByName(string resourceName)
+        {
+            return resources.Find(r => r.resourceName == resourceName);
+        }
+
+        private Resource GetWorkerResource()
+        {
+            return GetResourceByName("Workers");
+        }
+
+        public bool TryAssignWorkerToRegion(RegionController region, int amount)
+        {
+            Resource workerRes = GetWorkerResource();
+        
+            if (TryConsumeResource(workerRes, amount))
+            {
+                region.assignedWorkers += amount;
+                return true;
+            }
+            return false;
+        }
+        
+        public void RemoveWorkerFromRegion(RegionController region, int amount)
+        {
+            Resource workerRes = GetWorkerResource();
+
+            if (region.assignedWorkers >= amount)
+            {
+                region.assignedWorkers -= amount;
+                AddResource(workerRes, amount);
+            }
         }
     }
 }
