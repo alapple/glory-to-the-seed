@@ -95,6 +95,10 @@ namespace UI.Controllers
             {
                 happiness.text = "Happiness: " + amount.ToString("000");
             }
+            else
+            {
+                Debug.LogWarning("Happiness label not found in cache!");
+            }
         }
 
         public void ShowResourceAllocator(RegionController regionController)
