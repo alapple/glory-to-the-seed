@@ -2253,8 +2253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124fd6ec866a400588e4fde9761f54ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.QuestManager
-  minValue: 7000
-  maxValue: 8000
+  minValue: 1900
+  maxValue: 2500
   potatoGoal: 0
 --- !u!4 &2037434257
 Transform:

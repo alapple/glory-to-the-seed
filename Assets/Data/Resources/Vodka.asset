@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Resources.Resources
   resourceName: Vodka
   sprite: {fileID: 0}
-  minValue: 5
-  maxValue: 10
+  minValue: 2
+  maxValue: 5
   statType: 0
   statModifier: 5
