@@ -41,7 +41,7 @@ namespace Core
 
         void Awake()
         {
-            happiness = region.baseHappiness;
+            happiness = 100;
             production = (int)(region.baseProduction * region.productionModifier);
         }
 
@@ -49,11 +49,14 @@ namespace Core
         {
             TimeManager.Instance.OnStatsChange += () =>
             {
+                CalculateProduction();
                 AddPotatoes(production);
                 CalculateHappiness();
             };
             
             ResourceManager.Instance.TryAssignWorkerToRegion(this, 5);
+            CalculateProduction(); // Calculate initial production after workers are assigned
+            Debug.Log($"{region.regionName} initialized with {assignedWorkers} workers, happiness={happiness}, production={production}");
         }
 
         public void FixedUpdate()
@@ -74,6 +77,16 @@ namespace Core
             if (resource.resourceName == "Workers")
             {
                 ResourceManager.Instance.TryAssignWorkerToRegion(this, amount);
+                return;
+            }
+
+            // Potato and Vodka always go to feeding workers first (increase happiness)
+            if (resource.resourceName == "Potato" || resource.resourceName == "Vodka")
+            {
+                if (ResourceManager.Instance.TryConsumeResource(resource, amount))
+                {
+                    AllocateResources(resource);
+                }
                 return;
             }
 
@@ -106,15 +119,24 @@ namespace Core
             foreach (var evt in events)
             {
                 if (!evt.isThresholdEvent) continue;
-                if (_activePenalties.ContainsKey(evt)) continue;
 
-                bool conditionMet;
                 float currentVal = GetStatValue(evt.thresholdStat);
-
+                bool conditionMet;
+                
                 if (evt.triggerOnLower) conditionMet = currentVal < evt.thresholdValue;
                 else conditionMet = currentVal > evt.thresholdValue;
 
-                if (conditionMet) AddEvent(evt);
+                // If condition is met and event not active, add it
+                if (conditionMet && !_activePenalties.ContainsKey(evt))
+                {
+                    AddEvent(evt);
+                }
+                // If condition is no longer met and event is active, resolve it automatically
+                else if (!conditionMet && _activePenalties.ContainsKey(evt))
+                {
+                    ResolveEvent(evt);
+                    Debug.Log($"{region.regionName} - Threshold event resolved automatically: {evt.name}");
+                }
             }
         }
 
@@ -211,7 +233,11 @@ namespace Core
                 totalPenalty += penalty;
             }
 
-            production = (int)Math.Clamp((assignedWorkers * region.baseProduction) * (0.5f + happiness / 100f) - totalPenalty, 0, int.MaxValue);
+            float baseProduction = assignedWorkers * region.baseProduction * region.productionModifier;
+            
+            production = (int)Math.Clamp(baseProduction - totalPenalty, 0, int.MaxValue);
+            
+            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, final={production}");
         }
 
         private static void AddPotatoes(int amount)
@@ -266,10 +292,11 @@ namespace Core
                 return;
             }
 
-            // Vodka is 10x more effective than potatoes at solving hunger
+            // Vodka adds 10 happiness directly
             if (resource.resourceName == "Vodka")
             {
-                FeedWorkers(10);
+                happiness += 10;
+                happiness = Math.Clamp(happiness, 0, 100);
                 return;
             }
 

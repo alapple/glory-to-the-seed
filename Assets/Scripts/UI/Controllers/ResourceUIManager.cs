@@ -62,6 +62,7 @@ namespace UI.Controllers
             {
                 UpdatePotatoPerSecond(_currentRegion.production);
                 UpdateHappiness(_currentRegion.happiness);
+                UpdateAssignedWorkers(_currentRegion.assignedWorkers);
             }
         }
 
@@ -96,7 +97,16 @@ namespace UI.Controllers
         {
             if (_labelCache.TryGetValue("Happiness", out var happiness))
             {
-                happiness.text = "Happiness: " + amount.ToString("000");
+                happiness.text = "Happiness: " + amount.ToString();
+            }
+        }
+        
+        private void UpdateAssignedWorkers(int amount)
+        {
+            // Update a label showing assigned workers if it exists in the UI
+            if (_labelCache.TryGetValue("AssignedWorkers", out var assignedWorkers))
+            {
+                assignedWorkers.text = $"Workers: {amount}";
             }
             else
             {
