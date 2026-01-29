@@ -34,6 +34,7 @@ namespace Core
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
+        private readonly Dictionary<GameEvent, GameObject> _activeEventVisuals = new();
 
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
@@ -77,7 +78,6 @@ namespace Core
 
         public void HandleResourceDrop(Resource resource, int amount)
         {
-            // Dead fields cannot receive any resources
             if (isDead)
             {
                 Debug.LogWarning($"{region.regionName} - Field is DEAD! Cannot receive resources.");
@@ -90,7 +90,6 @@ namespace Core
                 return;
             }
 
-            // Potato and Vodka always go to feeding workers first (increase happiness)
             if (resource.resourceName == "Potato" || resource.resourceName == "Vodka")
             {
                 if (ResourceManager.Instance.TryConsumeResource(resource, amount))
@@ -174,6 +173,13 @@ namespace Core
                 OnDialogTriggered?.Invoke(evt.dialog, region.regionName);
             }
 
+            if (evt.visualPrefab != null)
+            {
+                GameObject visualInstance = Instantiate(evt.visualPrefab, transform);
+                visualInstance.transform.localPosition = Vector3.zero; 
+                _activeEventVisuals.Add(evt, visualInstance);
+            }
+
             if (evt.getsWorsOverTime)
             {
                 Coroutine timer = StartCoroutine(WorsenRoutine(evt));
@@ -228,6 +234,13 @@ namespace Core
                     StopCoroutine(_activeTimers[evt]);
                     _activeTimers.Remove(evt);
                 }
+
+                if (_activeEventVisuals.TryGetValue(evt, out GameObject visualInstance))
+                {
+                    if (visualInstance != null) Destroy(visualInstance);
+                    _activeEventVisuals.Remove(evt);
+                }
+
                 _activePenalties.Remove(evt);
                 _eventResolvers.Remove(evt);
                 OnEventResolved?.Invoke();
@@ -236,7 +249,6 @@ namespace Core
 
         private void CalculateProduction()
         {
-            // Dead fields produce nothing
             if (isDead)
             {
                 production = 0;
@@ -251,16 +263,11 @@ namespace Core
 
             float baseProduction = assignedWorkers * region.baseProduction * region.productionModifier;
             float adjustedProduction = baseProduction - totalPenalty;
-            
-            // Apply happiness modifier:
-            // - Below 30 happiness: production is halved
-            // - 30 or above: normal production
+
             if (happiness < 30)
             {
                 adjustedProduction *= 0.5f;
             }
-            
-            production = (int)Math.Clamp(adjustedProduction, 0, int.MaxValue);
             
             Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, happinessModifier={(happiness < 30 ? 0.5f : 1f)}, final={production}");
         }
@@ -282,21 +289,17 @@ namespace Core
 
         private void CalculateHappiness()
         {
-            // Dead fields don't update happiness
             if (isDead)
             {
                 return;
             }
             
-            // Workers no longer automatically consume food
-            // They must be fed manually using the GivePotato button
-            // Happiness decreases over time if not fed
             int oldHappiness = happiness;
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
             
+            if (happiness <= 0 && assignedWorkers > 0)
             
-            // Field becomes dead/useless when happiness reaches 0
             if (happiness <= 0)
             {
                 isDead = true;
@@ -307,14 +310,11 @@ namespace Core
 
         public void FeedWorkers(int potatoAmount)
         {
-            // Dead fields cannot be fed
             if (isDead)
             {
                 return;
             }
             
-            // Called when player uses GivePotato button
-            // Increase happiness when workers are fed
             int oldHappiness = happiness;
             happiness += eatingModifier * potatoAmount;
             happiness = Math.Clamp(happiness, 0, 100);
@@ -323,13 +323,11 @@ namespace Core
 
         public void AllocateResources(Resource resource)
         {
-            // Dead fields cannot receive resources
             if (isDead)
             {
                 return;
             }
             
-            // Special handling for Potato - feeds workers
             if (resource.resourceName == "Potato")
             {
                 FeedWorkers(1);
