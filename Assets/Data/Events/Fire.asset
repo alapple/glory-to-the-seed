@@ -26,4 +26,4 @@ MonoBehaviour:
   dialog: {fileID: 11400000, guid: 655e22610246027498d021fceb6d4ee3, type: 2}
   eventSound: {fileID: 8300000, guid: d61d7f512cdc0c145b87ba7a67b3ec67, type: 3}
   visualPrefab: {fileID: 2231512832225958516, guid: cf640109f9d84ebd8a7fa9b3104bcba7, type: 3}
-  randomChance: 100
+  randomChance: 10
