@@ -16,10 +16,10 @@ MonoBehaviour:
   thresholdStat: 0
   thresholdValue: 0
   triggerOnLower: 0
-  basePenalty: 10
+  basePenalty: 100
   getsWorsOverTime: 1
-  interval: 4
-  intervalPenalty: 10
+  interval: 1
+  intervalPenalty: 20
   resourcesToResolve:
   - {fileID: 11400000, guid: 665f2ee35ed8208bf9758fe52465f54b, type: 2}
   resourcesNeeded: 2
