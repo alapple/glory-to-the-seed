@@ -1,4 +1,5 @@
 using System;
+using UI.Controllers;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Resources = Data.Resources.Resources;
@@ -13,17 +14,20 @@ namespace Core
 
         public int maxValue;
 
-        private int PotatoGoal { get; set; }
+        public int potatoGoal;
 
         public event Action<bool> OnQuestCompleted;
+        public event Action<int> OnPotatoGenerated;
 
         void Awake()
         {
             Instance = this;
+            
         }
 
         private void Start()
         {
+            GenerateNewGoal();
             TimeManager.Instance.OnGameOver += () =>
             {
                 Debug.Log("Game Over!");
@@ -31,8 +35,8 @@ namespace Core
                 {
                     if (res.Key.resourceName.Equals("Potato"))
                     {
-                        Debug.Log($"Game Over! Potatoes: {res.Value}, Goal: {PotatoGoal}");
-                        if (res.Value >= PotatoGoal)
+                        Debug.Log($"Game Over! Potatoes: {res.Value}, Goal: {potatoGoal}");
+                        if (res.Value >= potatoGoal)
                         {
                             OnQuestCompleted?.Invoke(true);
                             Debug.Log("Quest completed!");
@@ -48,7 +52,11 @@ namespace Core
                 }
                 Debug.LogWarning("QuestManager: Potato resource not found!");
             };
-            PotatoGoal = Random.Range(minValue, maxValue);
+        }
+        public void GenerateNewGoal()
+        {
+            potatoGoal = Random.Range(minValue, maxValue);
+            OnPotatoGenerated?.Invoke(potatoGoal);
         }
     }
 }

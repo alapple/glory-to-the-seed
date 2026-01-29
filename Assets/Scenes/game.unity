@@ -2079,7 +2079,7 @@ MonoBehaviour:
   starvingModifier: 2
   eatingModifier: 1
   assignedWorkers: 0
---- !u!1 &2037434255
+--- !u!1 &2056770278
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2087,8 +2087,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2037434257}
-  - component: {fileID: 2037434256}
+  - component: {fileID: 2056770280}
+  - component: {fileID: 2056770279}
   m_Layer: 0
   m_Name: QuestManager
   m_TagString: Untagged
@@ -2096,13 +2096,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2037434256
+--- !u!114 &2056770279
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037434255}
+  m_GameObject: {fileID: 2056770278}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 124fd6ec866a400588e4fde9761f54ee, type: 3}
@@ -2110,13 +2110,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Core.QuestManager
   minValue: 1000
   maxValue: 2000
---- !u!4 &2037434257
+  potatoGoal: 0
+--- !u!4 &2056770280
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037434255}
+  m_GameObject: {fileID: 2056770278}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -2232,5 +2233,5 @@ SceneRoots:
   - {fileID: 450558758}
   - {fileID: 1461264839}
   - {fileID: 349353564}
-  - {fileID: 2037434257}
   - {fileID: 1191635871}
+  - {fileID: 2056770280}
