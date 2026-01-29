@@ -265,9 +265,7 @@ namespace Core
                 adjustedProduction *= 0.5f;
             }
             
-            production = (int)Math.Clamp(adjustedProduction, 0, int.MaxValue);
-            
-            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, happinessModifier={(happiness < 30 ? 0.5f : 1f)}, final={production}");
+            production = (int)Math.Clamp(baseProduction - totalPenalty, 0, int.MaxValue);
         }
 
         private static void AddPotatoes(int amount)
@@ -296,6 +294,7 @@ namespace Core
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
             
+            if (happiness <= 0 && assignedWorkers > 0)
             
             if (happiness <= 0)
             {
