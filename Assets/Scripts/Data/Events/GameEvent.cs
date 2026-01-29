@@ -25,6 +25,8 @@ namespace Data.Events
         public Dialog dialog;
         
         public AudioClip eventSound;
+        
+        public GameObject visualPrefab;
 
         [Range(0, 100)] public float randomChance; 
     }

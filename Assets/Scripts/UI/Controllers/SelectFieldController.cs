@@ -19,35 +19,39 @@ namespace UI.Controllers
         }
 
         void Update()
+{
+    if (!Mouse.current.leftButton.wasPressedThisFrame)
+        return;
+
+    Vector3 mousePos = Mouse.current.position.ReadValue();
+    Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
+    Vector2 mousePos2D = new Vector2(worldPos.x, worldPos.y);
+
+    // Klick auf UI → ignorieren
+    if (ResourceUIManager.Instance.IsPointerOverUI(mousePos))
+        return;
+
+    // 🔹 FALL 1: Es gibt bereits ein aktives Feld
+    if (_activeField != null)
+    {
+        // Klick außerhalb des aktiven Feldes → schließen
+        if (!_activeField._field.OverlapPoint(mousePos2D))
         {
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                Vector3 mousePos = Mouse.current.position.ReadValue();
-
-                Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePos);
-                Vector2 mousePos2D = new Vector2(worldPos.x, worldPos.y);
-
-                if (ResourceUIManager.Instance.IsPointerOverUI(mousePos))
-                {
-                    return; 
-                }
-                
-                if (_field.OverlapPoint(mousePos2D))
-                {
-                    if (_activeField == this && _isActive)
-                    {
-                        ResourceUIManager.Instance.HideResourceAllocator();
-                        _isActive = false;
-                        _activeField = null;
-                    }
-                    else if (_activeField == null)
-                    {
-                        ResourceUIManager.Instance.ShowResourceAllocator(regionController);
-                        _activeField = this;
-                        _isActive = true;
-                    }
-                }
-            }
+            ResourceUIManager.Instance.HideResourceAllocator();
+            _activeField._isActive = false;
+            _activeField = null;
+            return;
         }
+    }
+
+    // 🔹 FALL 2: Klick auf dieses Feld → öffnen
+    if (_field.OverlapPoint(mousePos2D) && _activeField == null)
+    {
+        ResourceUIManager.Instance.ShowResourceAllocator(regionController);
+        _activeField = this;
+        _isActive = true;
+    }
+}
+
     }
 }
