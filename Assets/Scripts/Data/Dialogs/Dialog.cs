@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Data.Dialogs
 {
-    [CreateAssetMenu(fileName = "New Dialog", menuName = "ScriptableObject/Dialog")]
+    [CreateAssetMenu(menuName = "Dialog")]
     public class Dialog : ScriptableObject
     {
         public string title;
