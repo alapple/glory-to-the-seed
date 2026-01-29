@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a976f16a6f044f698ac78b660222b7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.TimeManager
-  secondsPerMonth: 5
+  secondsPerMonth: 2
   startYear: 1965
   isPaused: 0
 --- !u!4 &450558758
@@ -1043,6 +1043,7 @@ MonoBehaviour:
   starvingModifier: 3
   eatingModifier: 1
   assignedWorkers: 0
+  isDead: 0
 --- !u!1 &1068218989
 GameObject:
   m_ObjectHideFlags: 0
@@ -1582,6 +1583,7 @@ MonoBehaviour:
   starvingModifier: 4
   eatingModifier: 1
   assignedWorkers: 0
+  isDead: 0
 --- !u!1 &1461264837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2079,6 +2081,7 @@ MonoBehaviour:
   starvingModifier: 2
   eatingModifier: 1
   assignedWorkers: 0
+  isDead: 0
 --- !u!1 &2037434255
 GameObject:
   m_ObjectHideFlags: 0
@@ -2108,8 +2111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 124fd6ec866a400588e4fde9761f54ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.QuestManager
-  minValue: 2000
-  maxValue: 3500
+  minValue: 7000
+  maxValue: 8000
   potatoGoal: 0
 --- !u!4 &2037434257
 Transform:
@@ -2235,3 +2238,4 @@ SceneRoots:
   - {fileID: 349353564}
   - {fileID: 1191635871}
   - {fileID: 2037434257}
+  - {fileID: 1690868718}
