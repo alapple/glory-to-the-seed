@@ -1,4 +1,5 @@
 using System;
+using Core;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -12,14 +13,15 @@ namespace UI.Controllers
     {
         public static EnvelopeManager Instance;
 
-        [Header("UI Documents")]
-        [SerializeField] private UIDocument envelopeDocument;
+        [Header("UI Documents")] [SerializeField]
+        private UIDocument envelopeDocument;
 
-        [Header("Animation Settings")]
-        [SerializeField] private Sprite[] envelopeAnimationFrames;
+        [Header("Animation Settings")] [SerializeField]
+        private Sprite[] envelopeAnimationFrames;
 
-        [Header("Scene Settings")]
-        [SerializeField] private SceneAsset declineScene;
+        [Header("Scene Settings")] [SerializeField]
+        private SceneAsset declineScene;
+
         [SerializeField, HideInInspector] private string declineSceneName;
 
         private void OnValidate()
@@ -34,6 +36,7 @@ namespace UI.Controllers
         private VisualElement _envelopeImage;
         private Button _acceptButton;
         private Button _declineButton;
+        private Label _potatoLabel;
 
         public event Action OnQuestAccepted;
         public event Action OnQuestDeclined;
@@ -43,7 +46,7 @@ namespace UI.Controllers
         private bool _isOnLastFrame;
         private AsyncOperation _preloadedScene;
 
-        void Awake()
+        void Start()
         {
             Instance = this;
             SetupEnvelopeUI();
@@ -58,6 +61,7 @@ namespace UI.Controllers
             _envelopeImage = root.Q<VisualElement>("EnvelopeImage");
             _acceptButton = root.Q<Button>("AcceptButton");
             _declineButton = root.Q<Button>("DeclineButton");
+            _potatoLabel = root.Q<Label>("PotatoLabel");
 
             if (_envelopeContainer != null)
             {
@@ -83,12 +87,14 @@ namespace UI.Controllers
             _currentFrame = 0;
             _isPlayingAnimation = true;
             _isOnLastFrame = false;
+            
+            
 
             if (_envelopeContainer != null)
                 _envelopeContainer.style.display = DisplayStyle.Flex;
 
             ShowFrame(0);
-            
+
             // Preload the decline scene in the background
             PreloadDeclineScene();
         }
@@ -96,7 +102,7 @@ namespace UI.Controllers
         private void PreloadDeclineScene()
         {
             if (string.IsNullOrEmpty(declineSceneName)) return;
-            
+
             _preloadedScene = SceneManager.LoadSceneAsync(declineSceneName);
             if (_preloadedScene != null)
             {
@@ -123,7 +129,8 @@ namespace UI.Controllers
 
         private void ShowFrame(int frameIndex)
         {
-            if (envelopeAnimationFrames != null && frameIndex < envelopeAnimationFrames.Length && _envelopeImage != null)
+            if (envelopeAnimationFrames != null && frameIndex < envelopeAnimationFrames.Length &&
+                _envelopeImage != null)
             {
                 _envelopeImage.style.backgroundImage = new StyleBackground(envelopeAnimationFrames[frameIndex]);
             }
@@ -139,6 +146,12 @@ namespace UI.Controllers
 
             if (_declineButton != null)
                 _declineButton.style.display = DisplayStyle.Flex;
+            if (_potatoLabel != null && QuestManager.Instance != null)
+            {
+                _potatoLabel.text = QuestManager.Instance.potatoGoal.ToString();
+                Debug.Log($"Potato count: {QuestManager.Instance.potatoGoal}");
+                Debug.Log(_potatoLabel.text);
+            }
         }
 
         private void OnAcceptClicked(ClickEvent evt)
@@ -156,13 +169,14 @@ namespace UI.Controllers
             evt.StopPropagation();
             HideEnvelope();
             OnQuestDeclined?.Invoke();
-            
+
             if (string.IsNullOrEmpty(declineSceneName))
             {
-                Debug.LogError("EnvelopeManager: Decline scene name is not set! Please assign a scene in the Inspector.");
+                Debug.LogError(
+                    "EnvelopeManager: Decline scene name is not set! Please assign a scene in the Inspector.");
                 return;
             }
-            
+
             // Use preloaded scene if available for instant switching
             if (_preloadedScene != null)
             {
