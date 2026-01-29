@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Data.Resources.Resources
   resourceName: Water
   sprite: {fileID: 0}
-  minValue: 2
-  maxValue: 6
+  minValue: 10
+  maxValue: 30
   statType: 1
   statModifier: 2
