@@ -48,7 +48,6 @@ namespace UI.Controllers
                     }
                 }
             }
-            //ResourceUIManager.Instance.UpdatePotatoPerSecond(regionController.production);
         }
     }
 }

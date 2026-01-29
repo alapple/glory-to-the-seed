@@ -37,6 +37,9 @@ namespace UI.Controllers
             
             var addVodkaBtn = uiDocument.rootVisualElement.Q<Button>("GiveVodka");
             addVodkaBtn.RegisterCallback<ClickEvent>(evt => GiveResourceToCurrentRegion("Vodka"));
+            
+            var addWorkerBtn = uiDocument.rootVisualElement.Q<Button>("GiveWorker");
+            addWorkerBtn.RegisterCallback<ClickEvent>(evt => GiveResourceToCurrentRegion("Workers"));
         }
 
         private void GiveResourceToCurrentRegion(string resourceName)
