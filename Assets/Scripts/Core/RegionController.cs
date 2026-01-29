@@ -37,7 +37,7 @@ namespace Core
 
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
-        public event Action<GameEvent, string> OnEventAppear;
+        public static event Action<GameEvent, string> OnEventAppear;
         public static event Action<Dialog, string> OnDialogTriggered;
 
         private float _randomCheckTimer;
@@ -169,10 +169,9 @@ namespace Core
             OnEventAppear?.Invoke(evt, region.regionName);
             _activePenalties.Add(evt, evt.basePenalty);
 
-            if (evt.dialog != null)
+            if (evt.dialog is not null)
             {
                 OnDialogTriggered?.Invoke(evt.dialog, region.regionName);
-                Debug.Log($"Dialog triggered for region {region.regionName}");
             }
 
             if (evt.getsWorsOverTime)
@@ -296,7 +295,6 @@ namespace Core
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
             
-            Debug.Log($"{region.regionName} - Happiness: {oldHappiness} -> {happiness} (modifier: -{starvingModifier})");
             
             // Field becomes dead/useless when happiness reaches 0
             if (happiness <= 0)

@@ -48,7 +48,7 @@ namespace UI.Controllers
         private void OnCreditButtonclick(ClickEvent evt)
         {
             ButtonSoundManager.Instance?.PlayButtonClick();
-            SceneManager.LoadScene("Credits");
+            SceneManager.LoadScene("CreditScene");
         }
 
         private void OnStartButtonClick(ClickEvent evt)
