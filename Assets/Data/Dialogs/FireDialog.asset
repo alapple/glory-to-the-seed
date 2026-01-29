@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86335756def4a01bc17202e645bdeb3, type: 3}
   m_Name: FireDialog
   m_EditorClassIdentifier: Assembly-CSharp::Data.Dialogs.Dialog
-  title: 
-  text: 
+  title: Fire
+  text: A fire broke out
