@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a976f16a6f044f698ac78b660222b7a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Core.TimeManager
-  secondsPerMonth: 2
+  secondsPerMonth: 5
   startYear: 1965
   isPaused: 0
 --- !u!4 &450558758
@@ -2110,6 +2110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Core.QuestManager
   minValue: 1000
   maxValue: 2000
+  potatoGoal: 0
 --- !u!4 &2037434257
 Transform:
   m_ObjectHideFlags: 0
@@ -2233,4 +2234,4 @@ SceneRoots:
   - {fileID: 1461264839}
   - {fileID: 349353564}
   - {fileID: 1191635871}
-  - {fileID: 2056770280}
+  - {fileID: 2037434257}
