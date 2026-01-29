@@ -34,7 +34,7 @@ namespace Core
 
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
-        public event Action<GameEvent, string> OnEventAppear;
+        public static event Action<GameEvent, string> OnEventAppear;
         public static event Action<Dialog, string> OnDialogTriggered;
 
         private float _randomCheckTimer;
@@ -55,8 +55,7 @@ namespace Core
             };
             
             ResourceManager.Instance.TryAssignWorkerToRegion(this, 5);
-            CalculateProduction(); // Calculate initial production after workers are assigned
-            Debug.Log($"{region.regionName} initialized with {assignedWorkers} workers, happiness={happiness}, production={production}");
+            CalculateProduction(); 
         }
 
         public void FixedUpdate()
@@ -126,16 +125,13 @@ namespace Core
                 if (evt.triggerOnLower) conditionMet = currentVal < evt.thresholdValue;
                 else conditionMet = currentVal > evt.thresholdValue;
 
-                // If condition is met and event not active, add it
                 if (conditionMet && !_activePenalties.ContainsKey(evt))
                 {
                     AddEvent(evt);
                 }
-                // If condition is no longer met and event is active, resolve it automatically
                 else if (!conditionMet && _activePenalties.ContainsKey(evt))
                 {
                     ResolveEvent(evt);
-                    Debug.Log($"{region.regionName} - Threshold event resolved automatically: {evt.name}");
                 }
             }
         }
@@ -159,10 +155,9 @@ namespace Core
             OnEventAppear?.Invoke(evt, region.regionName);
             _activePenalties.Add(evt, evt.basePenalty);
 
-            if (evt.dialog != null)
+            if (evt.dialog is not null)
             {
                 OnDialogTriggered?.Invoke(evt.dialog, region.regionName);
-                Debug.Log($"Dialog triggered for region {region.regionName}");
             }
 
             if (evt.getsWorsOverTime)
@@ -236,8 +231,6 @@ namespace Core
             float baseProduction = assignedWorkers * region.baseProduction * region.productionModifier;
             
             production = (int)Math.Clamp(baseProduction - totalPenalty, 0, int.MaxValue);
-            
-            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, final={production}");
         }
 
         private static void AddPotatoes(int amount)
@@ -257,42 +250,33 @@ namespace Core
 
         private void CalculateHappiness()
         {
-            // Workers no longer automatically consume food
-            // They must be fed manually using the GivePotato button
-            // Happiness decreases over time if not fed
+           
             int oldHappiness = happiness;
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
             
-            Debug.Log($"{region.regionName} - Happiness: {oldHappiness} -> {happiness} (modifier: -{starvingModifier})");
             
-            // Workers die if happiness reaches 0
             if (happiness <= 0 && assignedWorkers > 0)
             {
-                int workersToDie = Math.Max(1, assignedWorkers / 10); // 10% of workers die
+                int workersToDie = Math.Max(1, assignedWorkers / 10); 
                 assignedWorkers = Math.Max(0, assignedWorkers - workersToDie);
-                Debug.LogWarning($"{region.regionName} - {workersToDie} workers died from starvation! Remaining: {assignedWorkers}");
             }
         }
 
         public void FeedWorkers(int potatoAmount)
         {
-            // Called when player uses GivePotato button
-            // Increase happiness when workers are fed
             happiness += eatingModifier * potatoAmount;
             happiness = Math.Clamp(happiness, 0, 100);
         }
 
         public void AllocateResources(Resource resource)
         {
-            // Special handling for Potato - feeds workers
             if (resource.resourceName == "Potato")
             {
                 FeedWorkers(1);
                 return;
             }
 
-            // Vodka adds 10 happiness directly
             if (resource.resourceName == "Vodka")
             {
                 happiness += 10;
