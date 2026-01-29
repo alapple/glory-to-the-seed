@@ -28,13 +28,16 @@ namespace Core
         [Header("Population")]
         public int assignedWorkers;
         
+        // Field is dead when happiness reaches 0 - cannot be fed or produce
+        public bool isDead;
+        
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
 
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
-        public event Action<GameEvent, string> OnEventAppear;
+        public static event Action<GameEvent, string> OnEventAppear;
         public static event Action<Dialog, string> OnDialogTriggered;
 
         private float _randomCheckTimer;
@@ -74,6 +77,13 @@ namespace Core
 
         public void HandleResourceDrop(Resource resource, int amount)
         {
+            // Dead fields cannot receive any resources
+            if (isDead)
+            {
+                Debug.LogWarning($"{region.regionName} - Field is DEAD! Cannot receive resources.");
+                return;
+            }
+            
             if (resource.resourceName == "Workers")
             {
                 ResourceManager.Instance.TryAssignWorkerToRegion(this, amount);
@@ -159,10 +169,9 @@ namespace Core
             OnEventAppear?.Invoke(evt, region.regionName);
             _activePenalties.Add(evt, evt.basePenalty);
 
-            if (evt.dialog != null)
+            if (evt.dialog is not null)
             {
                 OnDialogTriggered?.Invoke(evt.dialog, region.regionName);
-                Debug.Log($"Dialog triggered for region {region.regionName}");
             }
 
             if (evt.getsWorsOverTime)
@@ -227,6 +236,13 @@ namespace Core
 
         private void CalculateProduction()
         {
+            // Dead fields produce nothing
+            if (isDead)
+            {
+                production = 0;
+                return;
+            }
+            
             float totalPenalty = 0;
             foreach (float penalty in _activePenalties.Values)
             {
@@ -234,10 +250,19 @@ namespace Core
             }
 
             float baseProduction = assignedWorkers * region.baseProduction * region.productionModifier;
+            float adjustedProduction = baseProduction - totalPenalty;
             
-            production = (int)Math.Clamp(baseProduction - totalPenalty, 0, int.MaxValue);
+            // Apply happiness modifier:
+            // - Below 30 happiness: production is halved
+            // - 30 or above: normal production
+            if (happiness < 30)
+            {
+                adjustedProduction *= 0.5f;
+            }
             
-            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, final={production}");
+            production = (int)Math.Clamp(adjustedProduction, 0, int.MaxValue);
+            
+            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, happinessModifier={(happiness < 30 ? 0.5f : 1f)}, final={production}");
         }
 
         private static void AddPotatoes(int amount)
@@ -257,6 +282,12 @@ namespace Core
 
         private void CalculateHappiness()
         {
+            // Dead fields don't update happiness
+            if (isDead)
+            {
+                return;
+            }
+            
             // Workers no longer automatically consume food
             // They must be fed manually using the GivePotato button
             // Happiness decreases over time if not fed
@@ -264,27 +295,40 @@ namespace Core
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
             
-            Debug.Log($"{region.regionName} - Happiness: {oldHappiness} -> {happiness} (modifier: -{starvingModifier})");
             
-            // Workers die if happiness reaches 0
-            if (happiness <= 0 && assignedWorkers > 0)
+            // Field becomes dead/useless when happiness reaches 0
+            if (happiness <= 0)
             {
-                int workersToDie = Math.Max(1, assignedWorkers / 10); // 10% of workers die
-                assignedWorkers = Math.Max(0, assignedWorkers - workersToDie);
-                Debug.LogWarning($"{region.regionName} - {workersToDie} workers died from starvation! Remaining: {assignedWorkers}");
+                isDead = true;
+                production = 0;
+                Debug.LogWarning($"{region.regionName} - Field is now DEAD! Cannot be fed or produce anymore.");
             }
         }
 
         public void FeedWorkers(int potatoAmount)
         {
+            // Dead fields cannot be fed
+            if (isDead)
+            {
+                return;
+            }
+            
             // Called when player uses GivePotato button
             // Increase happiness when workers are fed
+            int oldHappiness = happiness;
             happiness += eatingModifier * potatoAmount;
             happiness = Math.Clamp(happiness, 0, 100);
+            Debug.Log($"{region.regionName} - Workers fed: happiness {oldHappiness} -> {happiness}");
         }
 
         public void AllocateResources(Resource resource)
         {
+            // Dead fields cannot receive resources
+            if (isDead)
+            {
+                return;
+            }
+            
             // Special handling for Potato - feeds workers
             if (resource.resourceName == "Potato")
             {
@@ -292,11 +336,13 @@ namespace Core
                 return;
             }
 
-            // Vodka adds 10 happiness directly
+            // Vodka adds 14 happiness directly (2 vodka = 28 happiness)
             if (resource.resourceName == "Vodka")
             {
-                happiness += 10;
+                int oldHappiness = happiness;
+                happiness += 14;
                 happiness = Math.Clamp(happiness, 0, 100);
+                Debug.Log($"{region.regionName} - Vodka consumed: happiness {oldHappiness} -> {happiness}");
                 return;
             }
 

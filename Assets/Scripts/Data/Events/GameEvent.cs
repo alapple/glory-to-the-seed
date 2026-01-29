@@ -23,6 +23,8 @@ namespace Data.Events
         public int resourcesNeeded;
 
         public Dialog dialog;
+        
+        public AudioClip eventSound;
 
         [Range(0, 100)] public float randomChance; 
     }
