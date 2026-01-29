@@ -24,5 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 665f2ee35ed8208bf9758fe52465f54b, type: 2}
   resourcesNeeded: 2
   dialog: {fileID: 11400000, guid: 655e22610246027498d021fceb6d4ee3, type: 2}
-  eventSound: {fileID: 8300000, guid: d61d7f512cdc0c145b87ba7a67b3ec67, type: 3}
-  randomChance: 100
+  randomChance: 10
