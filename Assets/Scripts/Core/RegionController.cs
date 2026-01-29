@@ -31,6 +31,7 @@ namespace Core
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
+        private readonly Dictionary<GameEvent, GameObject> _activeEventVisuals = new();
 
         public event Action<GameEvent, int> OnEventWorsened;
         public event Action OnEventResolved;
@@ -79,7 +80,6 @@ namespace Core
                 return;
             }
 
-            // Potato and Vodka always go to feeding workers first (increase happiness)
             if (resource.resourceName == "Potato" || resource.resourceName == "Vodka")
             {
                 if (ResourceManager.Instance.TryConsumeResource(resource, amount))
@@ -160,6 +160,13 @@ namespace Core
                 OnDialogTriggered?.Invoke(evt.dialog, region.regionName);
             }
 
+            if (evt.visualPrefab != null)
+            {
+                GameObject visualInstance = Instantiate(evt.visualPrefab, transform);
+                visualInstance.transform.localPosition = Vector3.zero; 
+                _activeEventVisuals.Add(evt, visualInstance);
+            }
+
             if (evt.getsWorsOverTime)
             {
                 Coroutine timer = StartCoroutine(WorsenRoutine(evt));
@@ -214,6 +221,13 @@ namespace Core
                     StopCoroutine(_activeTimers[evt]);
                     _activeTimers.Remove(evt);
                 }
+
+                if (_activeEventVisuals.TryGetValue(evt, out GameObject visualInstance))
+                {
+                    if (visualInstance != null) Destroy(visualInstance);
+                    _activeEventVisuals.Remove(evt);
+                }
+
                 _activePenalties.Remove(evt);
                 _eventResolvers.Remove(evt);
                 OnEventResolved?.Invoke();
@@ -250,11 +264,9 @@ namespace Core
 
         private void CalculateHappiness()
         {
-           
             int oldHappiness = happiness;
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
-            
             
             if (happiness <= 0 && assignedWorkers > 0)
             {
