@@ -13,4 +13,6 @@ MonoBehaviour:
   m_Name: RevoltDialog
   m_EditorClassIdentifier: Assembly-CSharp::Data.Dialogs.Dialog
   title: 
-  text: 
+  text: 'Your workers are revolting
+
+'

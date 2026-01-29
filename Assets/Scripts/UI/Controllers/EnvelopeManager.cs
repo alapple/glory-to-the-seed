@@ -19,17 +19,11 @@ namespace UI.Controllers
         [Header("Animation Settings")] [SerializeField]
         private Sprite[] envelopeAnimationFrames;
 
-        [Header("Scene Settings")] [SerializeField]
-        private SceneAsset declineScene;
-
         [SerializeField, HideInInspector] private string declineSceneName;
 
         private void OnValidate()
         {
-            if (declineScene != null)
-            {
-                declineSceneName = declineScene.name;
-            }
+            declineSceneName = "DeclineScene";
         }
 
         private VisualElement _envelopeContainer;
@@ -87,8 +81,7 @@ namespace UI.Controllers
             _currentFrame = 0;
             _isPlayingAnimation = true;
             _isOnLastFrame = false;
-            
-            
+
 
             if (_envelopeContainer != null)
                 _envelopeContainer.style.display = DisplayStyle.Flex;
