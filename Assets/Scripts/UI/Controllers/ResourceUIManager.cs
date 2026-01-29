@@ -37,6 +37,9 @@ namespace UI.Controllers
             
             var addVodkaBtn = uiDocument.rootVisualElement.Q<Button>("GiveVodka");
             addVodkaBtn.RegisterCallback<ClickEvent>(evt => GiveResourceToCurrentRegion("Vodka"));
+            
+            var addWorkerBtn = uiDocument.rootVisualElement.Q<Button>("GiveWorker");
+            addWorkerBtn.RegisterCallback<ClickEvent>(evt => GiveResourceToCurrentRegion("Workers"));
         }
 
         private void GiveResourceToCurrentRegion(string resourceName)
@@ -94,6 +97,10 @@ namespace UI.Controllers
             if (_labelCache.TryGetValue("Happiness", out var happiness))
             {
                 happiness.text = "Happiness: " + amount.ToString("000");
+            }
+            else
+            {
+                Debug.LogWarning("Happiness label not found in cache!");
             }
         }
 
