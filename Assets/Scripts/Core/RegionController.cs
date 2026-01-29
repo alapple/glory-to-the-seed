@@ -22,7 +22,7 @@ namespace Core
 
         public List<GameEvent> events;
 
-        public int starvingModifier;
+        public int  starvingModifier;
         public int eatingModifier;
 
         [Header("Population")]
@@ -231,16 +231,48 @@ namespace Core
 
         private void CalculateHappiness()
         {
-            bool canEat = ResourceManager.Instance.ConsumePotatoes(assignedWorkers * 10);
-
-            if (canEat) happiness += eatingModifier;
-            else happiness -= starvingModifier;
+            // Workers no longer automatically consume food
+            // They must be fed manually using the GivePotato button
+            // Happiness decreases over time if not fed
+            int oldHappiness = happiness;
+            happiness -= starvingModifier;
+            happiness = Math.Clamp(happiness, 0, 100);
             
-            happiness = Math.Clamp(happiness, 0, 100);  
+            Debug.Log($"{region.regionName} - Happiness: {oldHappiness} -> {happiness} (modifier: -{starvingModifier})");
+            
+            // Workers die if happiness reaches 0
+            if (happiness <= 0 && assignedWorkers > 0)
+            {
+                int workersToDie = Math.Max(1, assignedWorkers / 10); // 10% of workers die
+                assignedWorkers = Math.Max(0, assignedWorkers - workersToDie);
+                Debug.LogWarning($"{region.regionName} - {workersToDie} workers died from starvation! Remaining: {assignedWorkers}");
+            }
+        }
+
+        public void FeedWorkers(int potatoAmount)
+        {
+            // Called when player uses GivePotato button
+            // Increase happiness when workers are fed
+            happiness += eatingModifier * potatoAmount;
+            happiness = Math.Clamp(happiness, 0, 100);
         }
 
         public void AllocateResources(Resource resource)
         {
+            // Special handling for Potato - feeds workers
+            if (resource.resourceName == "Potato")
+            {
+                FeedWorkers(1);
+                return;
+            }
+
+            // Vodka is 10x more effective than potatoes at solving hunger
+            if (resource.resourceName == "Vodka")
+            {
+                FeedWorkers(10);
+                return;
+            }
+
             switch (resource.statType)
             {
                 case StatType.Happiness: 
