@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Data.Dialogs;
 using Data.Events;
 using Data.Region;
+using UI.Controllers;
 using UnityEngine;
 using Utils;
 using Resource = Data.Resources.Resources;
@@ -28,7 +29,6 @@ namespace Core
         [Header("Population")]
         public int assignedWorkers;
         
-        // Field is dead when happiness reaches 0 - cannot be fed or produce
         public bool isDead;
         
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
@@ -42,6 +42,7 @@ namespace Core
         public static event Action<Dialog, string> OnDialogTriggered;
 
         private float _randomCheckTimer;
+        private bool _isGameStarted = false;
 
         void Awake()
         {
@@ -57,14 +58,20 @@ namespace Core
                 AddPotatoes(production);
                 CalculateHappiness();
             };
+
+            MainMenuBtnController.Instance.OnGameStart += () =>
+            {
+                _isGameStarted = true;
+            };
             
             ResourceManager.Instance.TryAssignWorkerToRegion(this, 5);
-            CalculateProduction(); // Calculate initial production after workers are assigned
-            Debug.Log($"{region.regionName} initialized with {assignedWorkers} workers, happiness={happiness}, production={production}");
+            CalculateProduction(); 
         }
 
         public void FixedUpdate()
         {
+            
+            if (!_isGameStarted) return;
             CheckThresholdEvent();
             CalculateProduction();
 
@@ -135,16 +142,13 @@ namespace Core
                 if (evt.triggerOnLower) conditionMet = currentVal < evt.thresholdValue;
                 else conditionMet = currentVal > evt.thresholdValue;
 
-                // If condition is met and event not active, add it
                 if (conditionMet && !_activePenalties.ContainsKey(evt))
                 {
                     AddEvent(evt);
                 }
-                // If condition is no longer met and event is active, resolve it automatically
                 else if (!conditionMet && _activePenalties.ContainsKey(evt))
                 {
                     ResolveEvent(evt);
-                    Debug.Log($"{region.regionName} - Threshold event resolved automatically: {evt.name}");
                 }
             }
         }
@@ -268,8 +272,7 @@ namespace Core
             {
                 adjustedProduction *= 0.5f;
             }
-            
-            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, happinessModifier={(happiness < 30 ? 0.5f : 1f)}, final={production}");
+            production = (int)adjustedProduction;
         }
 
         private static void AddPotatoes(int amount)
@@ -298,13 +301,10 @@ namespace Core
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
             
-            if (happiness <= 0 && assignedWorkers > 0)
-            
             if (happiness <= 0)
             {
                 isDead = true;
                 production = 0;
-                Debug.LogWarning($"{region.regionName} - Field is now DEAD! Cannot be fed or produce anymore.");
             }
         }
 
@@ -334,7 +334,6 @@ namespace Core
                 return;
             }
 
-            // Vodka adds 14 happiness directly (2 vodka = 28 happiness)
             if (resource.resourceName == "Vodka")
             {
                 int oldHappiness = happiness;
