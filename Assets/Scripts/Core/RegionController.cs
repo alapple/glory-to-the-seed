@@ -59,7 +59,8 @@ namespace Core
             };
             
             ResourceManager.Instance.TryAssignWorkerToRegion(this, 5);
-            CalculateProduction(); 
+            CalculateProduction(); // Calculate initial production after workers are assigned
+            Debug.Log($"{region.regionName} initialized with {assignedWorkers} workers, happiness={happiness}, production={production}");
         }
 
         public void FixedUpdate()
@@ -134,13 +135,16 @@ namespace Core
                 if (evt.triggerOnLower) conditionMet = currentVal < evt.thresholdValue;
                 else conditionMet = currentVal > evt.thresholdValue;
 
+                // If condition is met and event not active, add it
                 if (conditionMet && !_activePenalties.ContainsKey(evt))
                 {
                     AddEvent(evt);
                 }
+                // If condition is no longer met and event is active, resolve it automatically
                 else if (!conditionMet && _activePenalties.ContainsKey(evt))
                 {
                     ResolveEvent(evt);
+                    Debug.Log($"{region.regionName} - Threshold event resolved automatically: {evt.name}");
                 }
             }
         }
@@ -265,7 +269,7 @@ namespace Core
                 adjustedProduction *= 0.5f;
             }
             
-            production = (int)Math.Clamp(baseProduction - totalPenalty, 0, int.MaxValue);
+            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, happinessModifier={(happiness < 30 ? 0.5f : 1f)}, final={production}");
         }
 
         private static void AddPotatoes(int amount)
@@ -314,6 +318,7 @@ namespace Core
             int oldHappiness = happiness;
             happiness += eatingModifier * potatoAmount;
             happiness = Math.Clamp(happiness, 0, 100);
+            Debug.Log($"{region.regionName} - Workers fed: happiness {oldHappiness} -> {happiness}");
         }
 
         public void AllocateResources(Resource resource)
@@ -329,11 +334,13 @@ namespace Core
                 return;
             }
 
+            // Vodka adds 14 happiness directly (2 vodka = 28 happiness)
             if (resource.resourceName == "Vodka")
             {
                 int oldHappiness = happiness;
                 happiness += 14;
                 happiness = Math.Clamp(happiness, 0, 100);
+                Debug.Log($"{region.regionName} - Vodka consumed: happiness {oldHappiness} -> {happiness}");
                 return;
             }
 
