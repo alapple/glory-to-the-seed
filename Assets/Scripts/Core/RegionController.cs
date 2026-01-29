@@ -28,6 +28,9 @@ namespace Core
         [Header("Population")]
         public int assignedWorkers;
         
+        // Field is dead when happiness reaches 0 - cannot be fed or produce
+        public bool isDead;
+        
         private readonly Dictionary<GameEvent, int> _activePenalties = new();
         private readonly Dictionary<GameEvent, Coroutine> _activeTimers = new();
         private readonly Dictionary<GameEvent, int> _eventResolvers = new();
@@ -74,6 +77,12 @@ namespace Core
 
         public void HandleResourceDrop(Resource resource, int amount)
         {
+            if (isDead)
+            {
+                Debug.LogWarning($"{region.regionName} - Field is DEAD! Cannot receive resources.");
+                return;
+            }
+            
             if (resource.resourceName == "Workers")
             {
                 ResourceManager.Instance.TryAssignWorkerToRegion(this, amount);
@@ -236,6 +245,12 @@ namespace Core
 
         private void CalculateProduction()
         {
+            if (isDead)
+            {
+                production = 0;
+                return;
+            }
+            
             float totalPenalty = 0;
             foreach (float penalty in _activePenalties.Values)
             {
@@ -243,8 +258,16 @@ namespace Core
             }
 
             float baseProduction = assignedWorkers * region.baseProduction * region.productionModifier;
+            float adjustedProduction = baseProduction - totalPenalty;
+
+            if (happiness < 30)
+            {
+                adjustedProduction *= 0.5f;
+            }
             
-            production = (int)Math.Clamp(baseProduction - totalPenalty, 0, int.MaxValue);
+            production = (int)Math.Clamp(adjustedProduction, 0, int.MaxValue);
+            
+            Debug.Log($"{region.regionName} - Production: workers={assignedWorkers}, base={region.baseProduction}, modifier={region.productionModifier}, happiness={happiness}, penalty={totalPenalty}, happinessModifier={(happiness < 30 ? 0.5f : 1f)}, final={production}");
         }
 
         private static void AddPotatoes(int amount)
@@ -264,25 +287,43 @@ namespace Core
 
         private void CalculateHappiness()
         {
+            if (isDead)
+            {
+                return;
+            }
+            
             int oldHappiness = happiness;
             happiness -= starvingModifier;
             happiness = Math.Clamp(happiness, 0, 100);
             
-            if (happiness <= 0 && assignedWorkers > 0)
+            
+            if (happiness <= 0)
             {
-                int workersToDie = Math.Max(1, assignedWorkers / 10); 
-                assignedWorkers = Math.Max(0, assignedWorkers - workersToDie);
+                isDead = true;
+                production = 0;
+                Debug.LogWarning($"{region.regionName} - Field is now DEAD! Cannot be fed or produce anymore.");
             }
         }
 
         public void FeedWorkers(int potatoAmount)
         {
+            if (isDead)
+            {
+                return;
+            }
+            
+            int oldHappiness = happiness;
             happiness += eatingModifier * potatoAmount;
             happiness = Math.Clamp(happiness, 0, 100);
         }
 
         public void AllocateResources(Resource resource)
         {
+            if (isDead)
+            {
+                return;
+            }
+            
             if (resource.resourceName == "Potato")
             {
                 FeedWorkers(1);
@@ -291,7 +332,8 @@ namespace Core
 
             if (resource.resourceName == "Vodka")
             {
-                happiness += 10;
+                int oldHappiness = happiness;
+                happiness += 14;
                 happiness = Math.Clamp(happiness, 0, 100);
                 return;
             }
